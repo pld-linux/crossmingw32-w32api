@@ -38,11 +38,11 @@ with supporting Win32 libraries in 'coff' format from free sources.
 This package contains Win32 API includes and libraries.
 
 %description -l pl
-crossmingw32 jest kompletnym systemem do kroskompilacji, pozwalaj±cym
-budowaæ aplikacje MS Windows pod Linuksem u¿ywaj±c bibliotek mingw32.
-System sk³ada siê z binutils, gcc z g++ i objc, libstdc++ - wszystkie
-generuj±ce kod dla platformy i386-mingw32, oraz z bibliotek w formacie
-COFF.
+crossmingw32 jest kompletnym systemem do kompilacji skro¶nej,
+pozwalaj±cym budowaæ aplikacje MS Windows pod Linuksem u¿ywaj±c
+bibliotek mingw32. System sk³ada siê z binutils, gcc z g++ i objc,
+libstdc++ - wszystkie generuj±ce kod dla platformy i386-mingw32, oraz
+z bibliotek w formacie COFF.
 
 Ten pakiet zawiera pliki nag³ówkowe i biblioteki Win32 API.
 
