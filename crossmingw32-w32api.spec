@@ -4,7 +4,7 @@ Name:		crossmingw32-w32api
 Version:	2.4
 %define	apiver	%{version}
 %define	apisrc	w32api-%{apiver}
-%define runver	3.1
+%define runver	3.2
 %define	runsrc	mingw-runtime-%{runver}
 Release:	1
 Epoch:		1
@@ -14,7 +14,7 @@ Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
 # Source0-md5:	931b25da6223bd72ada13e83443cc6ed
 # only for headers
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	80a8eacd4dcb130bda42c42d35a4e564
+# Source1-md5:	9fe85d9ca858fe00c907ed1e3052ee4c
 URL:		http://www.mingw.org/
 BuildRequires:	crossmingw32-gcc
 Requires:	crossmingw32-binutils >= 2.14.90.0.4.1-2
