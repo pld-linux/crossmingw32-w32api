@@ -4,9 +4,9 @@ Name:		crossmingw32-w32api
 Version:	2.5
 %define	apiver	%{version}
 %define	apisrc	w32api-%{apiver}
-%define runver	3.2
+%define runver	3.3
 %define	runsrc	mingw-runtime-%{runver}
-Release:	2
+Release:	3
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
@@ -14,7 +14,9 @@ Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
 # Source0-md5:	395369c2c0c67394e54855f7516de3d3
 # only for headers
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	9fe85d9ca858fe00c907ed1e3052ee4c
+# Source1-md5:	21e9970d7c828eabd380132aa806dd41
+Source2:	http://oss.sgi.com/projects/ogl-sample/ABI/glext.h
+# Source2-md5:	a5738dcfa20119fa3e06ce479ca94acf
 URL:		http://www.mingw.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -88,6 +90,8 @@ rm -rf $RPM_BUILD_ROOT
 	inst_includedir=$RPM_BUILD_ROOT%{_includedir}
 
 %{!?debug:%{target}-strip -g $RPM_BUILD_ROOT%{_libdir}/*.a}
+
+install %{SOURCE2} $RPM_BUILD_ROOT%{_includedir}/GL
 
 %clean
 rm -rf $RPM_BUILD_ROOT
