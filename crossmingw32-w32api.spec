@@ -1,20 +1,20 @@
 Summary:	Mingw32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl):	Zestaw narzêdzi mingw32 - biblioteki API Win32
 Name:		crossmingw32-w32api
-Version:	2.3
+Version:	2.4
 %define	apiver	%{version}
 %define	apisrc	w32api-%{apiver}
-%define runver	3.0
+%define runver	3.1
 %define	runsrc	mingw-runtime-%{runver}
-Release:	2
+Release:	1
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
 Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
-# Source0-md5:	11d211e3a810b0a192cff5c5e4b9d0a9
+# Source0-md5:	931b25da6223bd72ada13e83443cc6ed
 # only for headers
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	3231a7d99d78665e0fb83c2f53f9f885
+# Source1-md5:	80a8eacd4dcb130bda42c42d35a4e564
 URL:		http://www.mingw.org/
 BuildRequires:	crossmingw32-gcc
 Requires:	crossmingw32-binutils >= 2.14.90.0.4.1-2
