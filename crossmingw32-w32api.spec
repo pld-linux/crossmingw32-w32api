@@ -2,27 +2,28 @@ Summary:	Mingw32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl):	Zestaw narzêdzi mingw32 - biblioteki API Win32
 Name:		crossmingw32-w32api
 Version:	2.3
-#%%define	api_date	20010606
-#%%define	apisrc		w32api-%{version}-%{api_date}
 %define	apiver	%{version}
 %define	apisrc	w32api-%{apiver}
-Release:	1
+%define runver	3.0
+%define	runsrc	mingw-runtime-%{runver}
+Release:	2
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
-# requires cross-gcc installed... loop. Use binaries (doesn't change much, I think).
-#Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
-Source0:	http://dl.sourceforge.net/mingw/%{apisrc}.tar.gz
-# Source0-md5:	31d5e495150e392ac0fe6b51011d3fa2
+Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
+# Source0-md5:	11d211e3a810b0a192cff5c5e4b9d0a9
+# only for headers
+Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
+# Source1-md5:	3231a7d99d78665e0fb83c2f53f9f885
 URL:		http://www.mingw.org/
-ExclusiveArch:	%{ix86}
-Requires:	crossmingw32-runtime
+BuildRequires:	crossmingw32-gcc
+Requires:	crossmingw32-binutils >= 2.14.90.0.4.1-2
 Obsoletes:	crossmingw32-platform
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		target		i386-mingw32
 %define		target_platform i386-pc-mingw32
-%define		arch		%{_prefix}/%{target}
+%define          _prefix /usr/%{target}
 
 # strip fails on static COFF files
 %define		no_install_post_strip 1
@@ -49,7 +50,7 @@ Ten pakiet zawiera pliki nag³ówkowe i biblioteki Win32 API.
 Summary:	DirectX from MinGW Win32 API
 Summary(pl):	DirectX z API Win32 dla MinGW
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description dx
 DirectX from MinGW Win32 API.
@@ -58,26 +59,39 @@ DirectX from MinGW Win32 API.
 DirectX z API Win32 dla MinGW.
 
 %prep
-%setup -q -c
+%setup -q -n w32api-%{version} -a1
+
+%build
+%{__autoconf}
+./configure \
+	--prefix=%{_prefix} \
+	--host=%{target} \
+	--build=%{_target_platform} \
+	CFLAGS="-I`pwd`/%{runsrc}/include %{rpmcflags}"
+
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{arch}/{include,lib}
 
-cp -fa include/* $RPM_BUILD_ROOT%{arch}/include
-cp -fa lib/* $RPM_BUILD_ROOT%{arch}/lib
+%{__make} install \
+	inst_libdir=$RPM_BUILD_ROOT%{_libdir} \
+	inst_includedir=$RPM_BUILD_ROOT%{_includedir}
+
+%{!?debug:%{target}-strip -g $RPM_BUILD_ROOT%{_libdir}/*.a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{arch}/include/*
-%{arch}/lib/lib[!d]*.a
-%{arch}/lib/libdlcapi.a
-%{arch}/lib/libdxapi.a
+%dir %{_includedir}
+%{_includedir}/*
+%{_libdir}/lib[!d]*.a
+%{_libdir}/libdlcapi.a
+%{_libdir}/libdxapi.a
 
 %files dx
 %defattr(644,root,root,755)
-%{arch}/lib/libd[!lx]*.a
-%{arch}/lib/libdxguid.a
+%{_libdir}/libd[!lx]*.a
+%{_libdir}/libdxguid.a
