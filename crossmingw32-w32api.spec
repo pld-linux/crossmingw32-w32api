@@ -16,7 +16,7 @@ Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
 # Source1-md5:	21e9970d7c828eabd380132aa806dd41
 Source2:	http://oss.sgi.com/projects/ogl-sample/ABI/glext.h
-# Source2-md5:	a5738dcfa20119fa3e06ce479ca94acf
+# NoSource2-md5:	a5738dcfa20119fa3e06ce479ca94acf
 URL:		http://www.mingw.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
