@@ -1,27 +1,28 @@
 Summary:	Mingw32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl):	Zestaw narzêdzi mingw32 - biblioteki API Win32
 Name:		crossmingw32-w32api
-Version:	2.5
+Version:	3.1
 %define	apiver	%{version}
 %define	apisrc	w32api-%{apiver}
-%define runver	3.3
+%define runver	3.5
 %define	runsrc	mingw-runtime-%{runver}
-Release:	6
+Release:	1
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
 Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
-# Source0-md5:	395369c2c0c67394e54855f7516de3d3
+# Source0-md5:	3a23cb1f26f22e1307f0605b72983ae5
 # only for headers
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	21e9970d7c828eabd380132aa806dd41
+# Source1-md5:	cfa1e37c0e6e3243f82044687c859caa
 Source2:	http://oss.sgi.com/projects/ogl-sample/ABI/glext.h
 # NoSource2-md5:	a5738dcfa20119fa3e06ce479ca94acf
+Patch0:		%{name}-include_fix.patch
 URL:		http://www.mingw.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	crossmingw32-gcc
-Requires:	crossmingw32-binutils >= 2.14.90.0.4.1-2
+Requires:	crossmingw32-binutils >= 2.15.91.0.2-2
 Obsoletes:	crossmingw32-platform
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -70,6 +71,7 @@ DirectX z API Win32 dla MinGW.
 
 %prep
 %setup -q -n w32api-%{version} -a1
+%patch0 -p1
 
 %build
 cp /usr/share/automake/config.sub .
@@ -110,3 +112,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %{_libdir}/libd[!lx]*.a
 %{_libdir}/libdxguid.a
+%{_libdir}/libdxerr8.a
+%{_libdir}/libdxerr9.a
