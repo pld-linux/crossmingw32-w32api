@@ -6,7 +6,7 @@ Version:	2.5
 %define	apisrc	w32api-%{apiver}
 %define runver	3.3
 %define	runsrc	mingw-runtime-%{runver}
-Release:	4
+Release:	5
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
