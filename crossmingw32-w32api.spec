@@ -6,7 +6,7 @@ Version:	2.5
 %define	apisrc	w32api-%{apiver}
 %define runver	3.2
 %define	runsrc	mingw-runtime-%{runver}
-Release:	1
+Release:	2
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
@@ -31,8 +31,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # strip fails on static COFF files
 %define		no_install_post_strip 1
 
-%ifarch alpha
-# alpha's -mieee is not valid for target's gcc
+%ifarch alpha sparc sparc64 sparcv9
+# alpha's -mieee and sparc's -mtune=* are not valid for target's gcc
 %define		optflags	-O2
 %endif
 
