@@ -13,6 +13,7 @@ Group:		Development/Libraries
 # requires cross-gcc installed... loop. Use binaries (doesn't change much, I think).
 #Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
 Source0:	http://dl.sourceforge.net/mingw/%{apisrc}.tar.gz
+# Source0-md5:	31d5e495150e392ac0fe6b51011d3fa2
 URL:		http://www.mingw.org/
 ExclusiveArch:	%{ix86}
 Requires:	crossmingw32-runtime
