@@ -6,7 +6,7 @@ Version:	2.5
 %define	apisrc	w32api-%{apiver}
 %define runver	3.3
 %define	runsrc	mingw-runtime-%{runver}
-Release:	5
+Release:	6
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
@@ -104,6 +104,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdlcapi.a
 %{_libdir}/libdxapi.a
 %exclude %{_libdir}/libglut.a
+%exclude %{_libdir}/libglut32.a
 
 %files dx
 %defattr(644,root,root,755)
