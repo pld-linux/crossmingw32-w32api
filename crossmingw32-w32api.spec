@@ -11,8 +11,8 @@ Epoch:		1
 License:	Free
 Group:		Development/Libraries
 # requires cross-gcc installed... loop. Use binaries (doesn't change much, I think).
-#Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/mingw/%{apisrc}-src.tar.gz
-Source0:	ftp://ftp.sourceforge.net/pub/sourceforge/mingw/%{apisrc}.tar.gz
+#Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
+Source0:	http://dl.sourceforge.net/mingw/%{apisrc}.tar.gz
 URL:		http://www.mingw.org/
 ExclusiveArch:	%{ix86}
 Requires:	crossmingw32-runtime
