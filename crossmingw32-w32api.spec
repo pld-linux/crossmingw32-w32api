@@ -49,7 +49,7 @@ Ten pakiet zawiera pliki nag³ówkowe i biblioteki Win32 API.
 Summary:	DirectX from MinGW Win32 API
 Summary(pl):	DirectX z API Win32 dla MinGW
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description dx
 DirectX from MinGW Win32 API.
