@@ -105,8 +105,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib[!d]*.a
 %{_libdir}/libdlcapi.a
 %{_libdir}/libdxapi.a
-%exclude %{_libdir}/libglut.a
-%exclude %{_libdir}/libglut32.a
+%exclude %{_libdir}/libglut*.a
+%exclude %{_includedir}/dxerr*.h
+%exclude %{_includedir}/d3d*.h
 
 %files dx
 %defattr(644,root,root,755)
@@ -114,3 +115,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libdxguid.a
 %{_libdir}/libdxerr8.a
 %{_libdir}/libdxerr9.a
+%{_includedir}/dxerr*.h
+%{_includedir}/d3d*.h
