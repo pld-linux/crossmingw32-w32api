@@ -16,6 +16,7 @@ Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
 # Source1-md5:	9fe85d9ca858fe00c907ed1e3052ee4c
 URL:		http://www.mingw.org/
+BuildRequires:	autoconf
 BuildRequires:	crossmingw32-gcc
 Requires:	crossmingw32-binutils >= 2.14.90.0.4.1-2
 Obsoletes:	crossmingw32-platform
