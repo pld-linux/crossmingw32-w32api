@@ -25,10 +25,15 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		target		i386-mingw32
 %define		target_platform i386-pc-mingw32
-%define          _prefix /usr/%{target}
+%define		_prefix		/usr/%{target}
 
 # strip fails on static COFF files
 %define		no_install_post_strip 1
+
+%ifarch alpha
+# alpha's -mieee is not valid for target's gcc
+%define		optflags	-O2
+%endif
 
 %description
 crossmingw32 is a complete cross-compiling development system for
