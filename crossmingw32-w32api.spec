@@ -17,6 +17,7 @@ Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
 # Source1-md5:	9fe85d9ca858fe00c907ed1e3052ee4c
 URL:		http://www.mingw.org/
 BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	crossmingw32-gcc
 Requires:	crossmingw32-binutils >= 2.14.90.0.4.1-2
 Obsoletes:	crossmingw32-platform
@@ -63,6 +64,7 @@ DirectX z API Win32 dla MinGW.
 %setup -q -n w32api-%{version} -a1
 
 %build
+cp /usr/share/automake/config.sub .
 %{__autoconf}
 ./configure \
 	--prefix=%{_prefix} \
