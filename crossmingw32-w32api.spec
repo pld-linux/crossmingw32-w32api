@@ -6,7 +6,7 @@ Version:	3.2
 %define	apisrc	w32api-%{apiver}
 %define runver	3.7
 %define	runsrc	mingw-runtime-%{runver}
-Release:	1
+Release:	2
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
@@ -16,7 +16,7 @@ Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
 # Source1-md5:	d5bb1d754e3315a768fe69056b3ee8d3
 Source2:	http://oss.sgi.com/projects/ogl-sample/ABI/glext.h
-# NoSource2-md5:	b3e8590b46dbab4341841592147fba26
+# NoSource2-md5:	0c40bd4545aa630e139043c2b12f0807
 Patch0:		%{name}-include_fix.patch
 URL:		http://www.mingw.org/
 BuildRequires:	autoconf
