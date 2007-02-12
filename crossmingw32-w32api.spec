@@ -1,5 +1,5 @@
 Summary:	Mingw32 Binary Utility Development Utilities - Win32 API libraries
-Summary(pl):	Zestaw narzêdzi mingw32 - biblioteki API Win32
+Summary(pl.UTF-8):   Zestaw narzÄ™dzi mingw32 - biblioteki API Win32
 Name:		crossmingw32-w32api
 Version:	3.7
 %define	apiver	%{version}
@@ -48,25 +48,25 @@ with supporting Win32 libraries in 'coff' format from free sources.
 
 This package contains Win32 API includes and libraries.
 
-%description -l pl
-crossmingw32 jest kompletnym systemem do kompilacji skro¶nej,
-pozwalaj±cym budowaæ aplikacje MS Windows pod Linuksem u¿ywaj±c
-bibliotek mingw32. System sk³ada siê z binutils, gcc z g++ i objc,
-libstdc++ - wszystkie generuj±ce kod dla platformy i386-mingw32, oraz
+%description -l pl.UTF-8
+crossmingw32 jest kompletnym systemem do kompilacji skroÅ›nej,
+pozwalajÄ…cym budowaÄ‡ aplikacje MS Windows pod Linuksem uÅ¼ywajÄ…c
+bibliotek mingw32. System skÅ‚ada siÄ™ z binutils, gcc z g++ i objc,
+libstdc++ - wszystkie generujÄ…ce kod dla platformy i386-mingw32, oraz
 z bibliotek w formacie COFF.
 
-Ten pakiet zawiera pliki nag³ówkowe i biblioteki Win32 API.
+Ten pakiet zawiera pliki nagÅ‚Ã³wkowe i biblioteki Win32 API.
 
 %package dx
 Summary:	DirectX from MinGW Win32 API
-Summary(pl):	DirectX z API Win32 dla MinGW
+Summary(pl.UTF-8):   DirectX z API Win32 dla MinGW
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description dx
 DirectX from MinGW Win32 API.
 
-%description dx -l pl
+%description dx -l pl.UTF-8
 DirectX z API Win32 dla MinGW.
 
 %prep
