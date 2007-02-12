@@ -1,5 +1,5 @@
 Summary:	Mingw32 Binary Utility Development Utilities - Win32 API libraries
-Summary(pl.UTF-8):   Zestaw narzędzi mingw32 - biblioteki API Win32
+Summary(pl.UTF-8):	Zestaw narzędzi mingw32 - biblioteki API Win32
 Name:		crossmingw32-w32api
 Version:	3.7
 %define	apiver	%{version}
@@ -59,7 +59,7 @@ Ten pakiet zawiera pliki nagłówkowe i biblioteki Win32 API.
 
 %package dx
 Summary:	DirectX from MinGW Win32 API
-Summary(pl.UTF-8):   DirectX z API Win32 dla MinGW
+Summary(pl.UTF-8):	DirectX z API Win32 dla MinGW
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
