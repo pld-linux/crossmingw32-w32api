@@ -1,20 +1,20 @@
 Summary:	Mingw32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl.UTF-8):	Zestaw narzędzi mingw32 - biblioteki API Win32
 Name:		crossmingw32-w32api
-Version:	3.7
+Version:	3.8
 %define	apiver	%{version}
 %define	apisrc	w32api-%{apiver}
-%define runver	3.10
+%define runver	3.11
 %define	runsrc	mingw-runtime-%{runver}
 Release:	2
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
 Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
-# Source0-md5:	d799c407b4c1b480d0339994d01f355d
+# Source0-md5:	f38604492ba27c914d527a07cb5c164a
 # only for headers
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	9225684e663eafa900b4075731c25f4c
+# Source1-md5:	642a9619b32fbf20602a6c8517b578df
 Source2:	http://oss.sgi.com/projects/ogl-sample/ABI/glext.h
 # NoSource2-md5:	0c40bd4545aa630e139043c2b12f0807
 Patch0:		%{name}-include_fix.patch
