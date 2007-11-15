@@ -15,8 +15,8 @@ Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
 # only for headers
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
 # Source1-md5:	f7f61ed33e1bd485e97a765c7945cb2a
-Source2:	http://oss.sgi.com/projects/ogl-sample/ABI/glext.h
-# NoSource2-md5:	0c40bd4545aa630e139043c2b12f0807
+Source2:	http://www.opengl.org/registry/api/glext.h
+# NoSource2-md5:	2e0c1c691b518b06691eba826a97cf3b
 Patch0:		%{name}-include_fix.patch
 Patch1:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
@@ -35,8 +35,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # strip fails on static COFF files
 %define		no_install_post_strip 1
 
-%ifarch alpha sparc sparc64 sparcv9
-# alpha's -mieee and sparc's -mtune=* are not valid for target's gcc
+%ifnarch %{ix86}
+# arch-specific flags (like alpha's -mieee) are not valid for i386 gcc
 %define		optflags	-O2
 %endif
 
