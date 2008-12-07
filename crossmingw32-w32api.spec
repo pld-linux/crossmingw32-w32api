@@ -1,22 +1,22 @@
 Summary:	Mingw32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl.UTF-8):	Zestaw narzędzi mingw32 - biblioteki API Win32
 Name:		crossmingw32-w32api
-Version:	3.10
+Version:	3.13
 %define	apiver	%{version}
-%define	apisrc	w32api-%{apiver}
-%define runver	3.13
-%define	runsrc	mingw-runtime-%{runver}
+%define	apisrc	w32api-%{apiver}-mingw32
+%define runver	3.15.1
+%define	runsrc	mingwrt-%{runver}-mingw32
 Release:	1
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
 Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
-# Source0-md5:	1323a47f1f0d9f44b12a20abedda4017
+# Source0-md5:	8eae788a09a589414b83adc91bb0c069
 # only for headers
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	f7f61ed33e1bd485e97a765c7945cb2a
+# Source1-md5:	0411b98fd5eeac0706e2abb7122526bb
 Source2:	http://www.opengl.org/registry/api/glext.h
-# NoSource2-md5:	2e0c1c691b518b06691eba826a97cf3b
+# NoSource2-md5:	b0cd2cc51ed747b755c3136eaa4be47c
 Patch0:		%{name}-include_fix.patch
 Patch1:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
@@ -71,7 +71,7 @@ DirectX from MinGW Win32 API.
 DirectX z API Win32 dla MinGW.
 
 %prep
-%setup -q -n w32api-%{version} -a1
+%setup -q -n w32api-%{version}-mingw32 -a1
 %patch0 -p1
 %patch1 -p1
 
@@ -90,8 +90,9 @@ cp /usr/share/automake/config.sub .
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	inst_libdir=$RPM_BUILD_ROOT%{_libdir} \
-	inst_includedir=$RPM_BUILD_ROOT%{_includedir}
+	libdir=$RPM_BUILD_ROOT%{_libdir} \
+	includedir=$RPM_BUILD_ROOT%{_includedir}
+
 
 %{!?debug:%{target}-strip -g $RPM_BUILD_ROOT%{_libdir}/*.a}
 
@@ -107,7 +108,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib[!d]*.a
 %{_libdir}/libdlcapi.a
 %{_libdir}/libdxapi.a
-%exclude %{_libdir}/libglut*.a
 %exclude %{_includedir}/dxerr*.h
 %exclude %{_includedir}/d3d*.h
 
