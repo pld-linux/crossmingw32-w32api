@@ -4,7 +4,7 @@ Name:		crossmingw32-w32api
 Version:	3.13
 %define	apiver	%{version}
 %define	apisrc	w32api-%{apiver}-mingw32
-%define runver	3.15.1
+%define runver	3.16
 %define	runsrc	mingwrt-%{runver}-mingw32
 Release:	1
 Epoch:		1
@@ -14,9 +14,9 @@ Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
 # Source0-md5:	8eae788a09a589414b83adc91bb0c069
 # only for headers
 Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	0411b98fd5eeac0706e2abb7122526bb
+# Source1-md5:	d56a0712cd4c70a46c27fc20b92ea2c3
 Source2:	http://www.opengl.org/registry/api/glext.h
-# NoSource2-md5:	b0cd2cc51ed747b755c3136eaa4be47c
+# NoSource2-md5:	9ada1fff96086ea5e44f359e90186254
 Patch0:		%{name}-include_fix.patch
 Patch1:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
