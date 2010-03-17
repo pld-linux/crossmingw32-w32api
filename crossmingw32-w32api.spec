@@ -1,22 +1,22 @@
 Summary:	Mingw32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl.UTF-8):	Zestaw narzędzi mingw32 - biblioteki API Win32
 Name:		crossmingw32-w32api
-Version:	3.13
+Version:	3.14
 %define	apiver	%{version}
 %define	apisrc	w32api-%{apiver}-mingw32
-%define runver	3.16
+%define runver	3.18
 %define	runsrc	mingwrt-%{runver}-mingw32
 Release:	1
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
-Source0:	http://dl.sourceforge.net/mingw/%{apisrc}-src.tar.gz
-# Source0-md5:	8eae788a09a589414b83adc91bb0c069
+Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.gz
+# Source0-md5:	c31baedaf2a8d38874e056a112a4fbc8
 # only for headers
-Source1:	http://dl.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	d56a0712cd4c70a46c27fc20b92ea2c3
+Source1:	http://downloads.sourceforge.net/mingw/%{runsrc}-src.tar.gz
+# Source1-md5:	34b54cb3379f871f0dcd5c20b69b0350
 Source2:	http://www.opengl.org/registry/api/glext.h
-# NoSource2-md5:	9ada1fff96086ea5e44f359e90186254
+# NoSource2-md5:	f7933dfbc98bb0408cf3ec805cb82640
 Patch0:		%{name}-include_fix.patch
 Patch1:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
@@ -63,6 +63,8 @@ Summary:	DirectX from MinGW Win32 API
 Summary(pl.UTF-8):	DirectX z API Win32 dla MinGW
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+Provides:	crossmingw32-dx
+Obsoletes:	crossmingw32-dx
 
 %description dx
 DirectX from MinGW Win32 API.
@@ -104,18 +106,53 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %dir %{_includedir}
-%{_includedir}/*
+%{_includedir}/[!d]*.h
+%{_includedir}/dbt.h
+%{_includedir}/dde.h
+%{_includedir}/ddeml.h
+%{_includedir}/devguid.h
+%{_includedir}/dhcpcsdk.h
+%{_includedir}/dlgs.h
+%{_includedir}/docobj.h
+%{_includedir}/dsadmin.h
+%{_includedir}/dsclient.h
+%{_includedir}/dsgetdc.h
+%{_includedir}/dsquery.h
+%{_includedir}/dsrole.h
+%{_includedir}/dvdevcod.h
+%{_includedir}/dvdmedia.h
+%{_includedir}/GL
+%{_includedir}/ddk
 %{_libdir}/lib[!d]*.a
+%{_libdir}/libdhcpcsvc.a
 %{_libdir}/libdlcapi.a
+%{_libdir}/libdnsapi.a
 %{_libdir}/libdxapi.a
-%exclude %{_includedir}/dxerr*.h
-%exclude %{_includedir}/d3d*.h
 
 %files dx
 %defattr(644,root,root,755)
-%{_libdir}/libd[!lx]*.a
-%{_libdir}/libdxguid.a
+%{_libdir}/libd3d8.a
+%{_libdir}/libd3d9.a
+%{_libdir}/libd3dim.a
+%{_libdir}/libd3drm.a
+%{_libdir}/libd3dx8d.a
+%{_libdir}/libd3dx9d.a
+%{_libdir}/libd3dxof.a
+%{_libdir}/libddraw.a
+%{_libdir}/libdinput.a
+%{_libdir}/libdinput8.a
+%{_libdir}/libdmoguids.a
+%{_libdir}/libdplayx.a
+%{_libdir}/libdpnaddr.a
+%{_libdir}/libdpnet.a
+%{_libdir}/libdpnlobby.a
+%{_libdir}/libdpvoice.a
+%{_libdir}/libdsetup.a
+%{_libdir}/libdsound.a
 %{_libdir}/libdxerr8.a
 %{_libdir}/libdxerr9.a
-%{_includedir}/dxerr*.h
-%{_includedir}/d3d*.h
+%{_libdir}/libdxguid.a
+%{_includedir}/d3d9*.h
+%{_includedir}/dshow.h
+%{_includedir}/dxerr8.h
+%{_includedir}/dxerr9.h
