@@ -1,5 +1,5 @@
-Summary:	Mingw32 Binary Utility Development Utilities - Win32 API libraries
-Summary(pl.UTF-8):	Zestaw narzędzi mingw32 - biblioteki API Win32
+Summary:	MinGW32 Binary Utility Development Utilities - Win32 API libraries
+Summary(pl.UTF-8):	Zestaw narzędzi MinGW32 - biblioteki API Win32
 Name:		crossmingw32-w32api
 Version:	3.14
 %define	apiver	%{version}
@@ -43,7 +43,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 crossmingw32 is a complete cross-compiling development system for
 building stand-alone Microsoft Windows applications under Linux using
-the Mingw32 build libraries. This includes a binutils, gcc with g++
+the MinGW32 build libraries. This includes a binutils, gcc with g++
 and objc, and libstdc++, all cross targeted to i386-mingw32, along
 with supporting Win32 libraries in 'coff' format from free sources.
 
@@ -52,7 +52,7 @@ This package contains Win32 API includes and libraries.
 %description -l pl.UTF-8
 crossmingw32 jest kompletnym systemem do kompilacji skrośnej,
 pozwalającym budować aplikacje MS Windows pod Linuksem używając
-bibliotek mingw32. System składa się z binutils, gcc z g++ i objc,
+bibliotek MinGW32. System składa się z binutils, gcc z g++ i objc,
 libstdc++ - wszystkie generujące kod dla platformy i386-mingw32, oraz
 z bibliotek w formacie COFF.
 
