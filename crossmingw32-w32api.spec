@@ -1,28 +1,30 @@
 Summary:	MinGW32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl.UTF-8):	Zestaw narzędzi MinGW32 - biblioteki API Win32
 Name:		crossmingw32-w32api
-Version:	3.14
+Version:	3.15
 %define	apiver	%{version}
-%define	apisrc	w32api-%{apiver}-mingw32
+%define	apisrc	w32api-%{apiver}-1-mingw32
 %define runver	3.18
 %define	runsrc	mingwrt-%{runver}-mingw32
 Release:	1
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
-Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.gz
-# Source0-md5:	c31baedaf2a8d38874e056a112a4fbc8
+Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.lzma
+# Source0-md5:	ea8f80d622446a63f3fa6aff64f79bfc
 # only for headers
 Source1:	http://downloads.sourceforge.net/mingw/%{runsrc}-src.tar.gz
 # Source1-md5:	34b54cb3379f871f0dcd5c20b69b0350
 Source2:	http://www.opengl.org/registry/api/glext.h
-# NoSource2-md5:	f7933dfbc98bb0408cf3ec805cb82640
+# NoSource2-md5:	36eba7472c6fb11ab565d0f44a26432b
 Patch0:		%{name}-include_fix.patch
 Patch1:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	crossmingw32-gcc
+BuildRequires:	tar >= 1:1.22
+BuildRequires:	xz
 Requires:	crossmingw32-binutils >= 2.15.91.0.2-2
 Obsoletes:	crossmingw32-platform
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -73,7 +75,7 @@ DirectX from MinGW Win32 API.
 DirectX z API Win32 dla MinGW.
 
 %prep
-%setup -q -n w32api-%{version}-mingw32 -a1
+%setup -q -n %{apisrc} -a1
 %patch0 -p1
 %patch1 -p1
 
