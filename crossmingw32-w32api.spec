@@ -37,6 +37,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 # strip fails on static COFF files
 %define		no_install_post_strip 1
 
+%define		filterout_ld	-Wl,-z,.*
+%define		filterout_c	-gdwarf-3
+
 %ifnarch %{ix86}
 # arch-specific flags (like alpha's -mieee) are not valid for i386 gcc
 %define		optflags	-O2
