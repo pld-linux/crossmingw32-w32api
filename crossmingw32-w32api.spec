@@ -1,22 +1,22 @@
 Summary:	MinGW32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl.UTF-8):	Zestaw narzędzi MinGW32 - biblioteki API Win32
 Name:		crossmingw32-w32api
-Version:	3.15
+Version:	3.17
 %define	apiver	%{version}
-%define	apisrc	w32api-%{apiver}-1-mingw32
+%define	apisrc	w32api-%{apiver}-2-mingw32
 %define runver	3.18
 %define	runsrc	mingwrt-%{runver}-mingw32
-Release:	2
+Release:	1
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
 Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.lzma
-# Source0-md5:	ea8f80d622446a63f3fa6aff64f79bfc
+# Source0-md5:	7a14e6c9687c010eed35db95604548a4
 # only for headers
 Source1:	http://downloads.sourceforge.net/mingw/%{runsrc}-src.tar.gz
 # Source1-md5:	34b54cb3379f871f0dcd5c20b69b0350
 Source2:	http://www.opengl.org/registry/api/glext.h
-# NoSource2-md5:	36eba7472c6fb11ab565d0f44a26432b
+# NoSource2-md5:	4bae59ed034b7c808081c0b56e42c0cb
 Patch0:		%{name}-include_fix.patch
 Patch1:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
@@ -128,6 +128,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/dvdmedia.h
 %{_includedir}/GL
 %{_includedir}/ddk
+%{_includedir}/gdiplus
 %{_libdir}/lib[!d]*.a
 %{_libdir}/libdhcpcsvc.a
 %{_libdir}/libdlcapi.a
