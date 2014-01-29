@@ -16,7 +16,6 @@ Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.lzma
 Source1:	http://downloads.sourceforge.net/mingw/%{runsrc}-src.tar.gz
 # Source1-md5:	26c0886cc60729b94956cc6d81cd076c
 Source2:	http://www.opengl.org/registry/api/glext.h
-# NoSource2-md5:	5ccfb02b961aae00817871202ec99f59
 Patch0:		%{name}-include_fix.patch
 Patch1:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
