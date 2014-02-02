@@ -1,3 +1,4 @@
+# NOTE: for versions >= 4 see crossmingw32-runtime.spec (both package sets are built from single tarball)
 Summary:	MinGW32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl.UTF-8):	Zestaw narzędzi MinGW32 - biblioteki API Win32
 Name:		crossmingw32-w32api
