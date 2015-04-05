@@ -12,14 +12,12 @@ Epoch:		1
 License:	Free
 Group:		Development/Libraries
 Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.lzma
-# Source0-md5:	
+# Source0-md5:	7a14e6c9687c010eed35db95604548a4
 # only for headers
 Source1:	http://downloads.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	
+# Source1-md5:	26c0886cc60729b94956cc6d81cd076c
 Source2:	http://www.opengl.org/registry/api/GL/glext.h
-# Source2-md5:	84bbc8294a41cc6fa9d823708674899f
 Source3:	http://www.opengl.org/registry/api/GL/wglext.h
-# Source3-md5:	c7d36abd1d65604be644de77c7a36069
 Patch0:		%{name}-include_fix.patch
 Patch1:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
