@@ -7,7 +7,7 @@ Version:	3.17
 %define	apisrc	w32api-%{apiver}-2-mingw32
 %define runver	3.20
 %define	runsrc	mingwrt-%{runver}-mingw32
-Release:	2
+Release:	3
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
