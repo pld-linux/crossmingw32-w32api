@@ -2,27 +2,26 @@
 Summary:	MinGW32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl.UTF-8):	Zestaw narzędzi MinGW32 - biblioteki API Win32
 Name:		crossmingw32-w32api
-Version:	3.17
+Version:	3.18.2
 %define	apiver	%{version}
-%define	apisrc	w32api-%{apiver}-2-mingw32
-%define runver	3.20
+%define	apisrc	w32api-%{apiver}-mingw32
+%define runver	3.22.4
 %define	runsrc	mingwrt-%{runver}-mingw32
-Release:	3
+Release:	1
 Epoch:		1
 License:	Free
 Group:		Development/Libraries
-Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.lzma
-# Source0-md5:	7a14e6c9687c010eed35db95604548a4
+Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.xz
+# Source0-md5:	e891339f9460c1164583a43335269416
 # only for headers
-Source1:	http://downloads.sourceforge.net/mingw/%{runsrc}-src.tar.gz
-# Source1-md5:	26c0886cc60729b94956cc6d81cd076c
+Source1:	http://downloads.sourceforge.net/mingw/%{runsrc}-src.tar.xz
+# Source1-md5:	efa617e408ffb66b292f8f8145d86fa1
 # http://www.opengl.org/registry/api/GL/
 Source2:	glext.h
 Source3:	wglext.h
-Patch0:		%{name}-include_fix.patch
-Patch1:		%{name}-mmsystem.patch
+Patch0:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake
 BuildRequires:	crossmingw32-gcc
 BuildRequires:	tar >= 1:1.22
@@ -40,7 +39,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		no_install_post_strip 1
 
 %define		filterout_ld	-Wl,-z,.*
-%define		filterout_c	-gdwarf-3
+%define		filterout_c	-gdwarf-3 -fstack-protector.*
 
 %ifnarch %{ix86}
 # arch-specific flags (like alpha's -mieee) are not valid for i386 gcc
@@ -80,28 +79,29 @@ DirectX from MinGW Win32 API.
 DirectX z API Win32 dla MinGW.
 
 %prep
-%setup -q -n %{apisrc} -a1
+%setup -q -c -a1
+ln -snf w32api-%{apiver} w32api
+ln -snf mingwrt-%{runver} mingwrt
+cd w32api
 %patch0 -p1
-%patch1 -p1
 
 %build
+cd w32api
 cp /usr/share/automake/config.sub .
 %{__autoconf}
 ./configure \
 	--prefix=%{_prefix} \
 	--host=%{target} \
-	--build=%{_target_platform} \
-	CFLAGS="-I`pwd`/%{runsrc}/include %{rpmcflags}"
+	--build=%{_target_platform}
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
+%{__make} -C w32api install \
 	libdir=$RPM_BUILD_ROOT%{_libdir} \
 	includedir=$RPM_BUILD_ROOT%{_includedir}
-
 
 %{!?debug:%{target}-strip -g $RPM_BUILD_ROOT%{_libdir}/*.a}
 
@@ -112,6 +112,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
+%doc w32api/{CONTRIBUTIONS,ChangeLog,README.w32api,TODO}
 %{_libdir}/libaclui.a
 %{_libdir}/libadvapi32.a
 %{_libdir}/libapcups.a
@@ -394,6 +395,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/schnlsp.h
 %{_includedir}/scrnsave.h
 %{_includedir}/sddl.h
+%{_includedir}/sdkddkver.h
 %{_includedir}/secext.h
 %{_includedir}/security.h
 %{_includedir}/servprov.h
@@ -403,6 +405,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/shlguid.h
 %{_includedir}/shlobj.h
 %{_includedir}/shlwapi.h
+%{_includedir}/shobjidl.h
 %{_includedir}/snmp.h
 %{_includedir}/specstrings.h
 %{_includedir}/sql.h
