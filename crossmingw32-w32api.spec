@@ -9,7 +9,7 @@ Version:	3.18.2
 %define	runsrc	mingwrt-%{runver}-mingw32
 Release:	1
 Epoch:		1
-License:	Free
+License:	Free (Public Domain, SGI Free Software License B, BSD)
 Group:		Development/Libraries
 Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.xz
 # Source0-md5:	e891339f9460c1164583a43335269416
@@ -41,7 +41,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		filterout_ld	-Wl,-z,.*
 %define		filterout_c	-gdwarf-3 -fstack-protector.*
 
-%ifnarch %{ix86}
+%ifnarch %{ix86} %{x8664} x32
 # arch-specific flags (like alpha's -mieee) are not valid for i386 gcc
 %define		optflags	-O2
 %endif
