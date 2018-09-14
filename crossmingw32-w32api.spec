@@ -1,24 +1,27 @@
-# NOTE: for versions >= 4 see crossmingw32-runtime.spec (both package sets are built from single tarball)
 Summary:	MinGW32 Binary Utility Development Utilities - Win32 API libraries
 Summary(pl.UTF-8):	Zestaw narzędzi MinGW32 - biblioteki API Win32
 Name:		crossmingw32-w32api
-Version:	3.18.2
+Version:	5.0.2
 %define	apiver	%{version}
 %define	apisrc	w32api-%{apiver}-mingw32
-%define runver	3.22.4
+%define runver	5.0.2
 %define	runsrc	mingwrt-%{runver}-mingw32
 Release:	1
 Epoch:		1
 License:	Free (Public Domain, SGI Free Software License B, BSD)
 Group:		Development/Libraries
 Source0:	http://downloads.sourceforge.net/mingw/%{apisrc}-src.tar.xz
-# Source0-md5:	e891339f9460c1164583a43335269416
+# Source0-md5:	716b956cdd2e70feed6861e9fbd1a116
 # only for headers
 Source1:	http://downloads.sourceforge.net/mingw/%{runsrc}-src.tar.xz
-# Source1-md5:	efa617e408ffb66b292f8f8145d86fa1
-# http://www.opengl.org/registry/api/GL/
-Source2:	glext.h
-Source3:	wglext.h
+# Source1-md5:	9865c83624b0e80178fdc709ebbc5e15
+# https://www.khronos.org/registry/OpenGL/api/GL/
+Source2:	https://www.khronos.org/registry/OpenGL/api/GL/glext.h
+# Source2-md5:	b6843d4fb386784479cfa76a94719a1e
+Source3:	https://www.khronos.org/registry/OpenGL/api/GL/wgl.h
+# Source3-md5:	425b343fe764cfcc478db28566e0679a
+Source4:	https://www.khronos.org/registry/OpenGL/api/GL/wglext.h
+# Source4-md5:	6ab4da87f8e08c7a6f75fd846379eef8
 Patch0:		%{name}-mmsystem.patch
 URL:		http://www.mingw.org/
 BuildRequires:	autoconf >= 2.64
@@ -105,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %{!?debug:%{target}-strip -g $RPM_BUILD_ROOT%{_libdir}/*.a}
 
-cp -p %{SOURCE2} %{SOURCE3} $RPM_BUILD_ROOT%{_includedir}/GL
+cp -p %{SOURCE2} %{SOURCE3} %{SOURCE4} $RPM_BUILD_ROOT%{_includedir}/GL
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -230,6 +233,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libwst.a
 %{_libdir}/libwtsapi32.a
 %dir %{_includedir}
+%{_includedir}/_winsock.h
 %{_includedir}/accctrl.h
 %{_includedir}/aclapi.h
 %{_includedir}/aclui.h
