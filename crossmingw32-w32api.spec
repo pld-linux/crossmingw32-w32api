@@ -31,6 +31,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	crossmingw32-binutils >= 2.15.91.0.2-2
 Obsoletes:	crossmingw32-platform
+Conflicts:	crossmingw32-runtime < 1:4.0.3-5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		target		i386-mingw32
