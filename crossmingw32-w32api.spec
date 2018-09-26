@@ -6,7 +6,7 @@ Version:	5.0.2
 %define	apisrc	w32api-%{apiver}-mingw32
 %define runver	5.0.2
 %define	runsrc	mingwrt-%{runver}-mingw32
-Release:	1
+Release:	2
 Epoch:		1
 License:	Free (Public Domain, SGI Free Software License B, BSD)
 Group:		Development/Libraries
@@ -23,6 +23,7 @@ Source3:	https://www.khronos.org/registry/OpenGL/api/GL/wgl.h
 Source4:	https://www.khronos.org/registry/OpenGL/api/GL/wglext.h
 # Source4-md5:	6ab4da87f8e08c7a6f75fd846379eef8
 Patch0:		%{name}-mmsystem.patch
+Patch1:		%{name}-winapi-update.patch
 URL:		http://www.mingw.org/
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake
@@ -88,6 +89,7 @@ ln -snf w32api-%{apiver} w32api
 ln -snf mingwrt-%{runver} mingwrt
 cd w32api
 %patch0 -p1
+%patch1 -p1
 
 %build
 cd w32api
@@ -283,6 +285,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/httpext.h
 %{_includedir}/icm.h
 %{_includedir}/idispids.h
+%{_includedir}/ifdef.h
 %{_includedir}/il21dec.h
 %{_includedir}/imagehlp.h
 %{_includedir}/imm.h
@@ -341,7 +344,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/mswsock.h
 %{_includedir}/nb30.h
 %{_includedir}/nddeapi.h
+%{_includedir}/ndkinfo.h
+%{_includedir}/netioapi.h
+%{_includedir}/nldef.h
 %{_includedir}/nspapi.h
+%{_includedir}/ntddndis.h
 %{_includedir}/ntdef.h
 %{_includedir}/ntdll.h
 %{_includedir}/ntdsapi.h
