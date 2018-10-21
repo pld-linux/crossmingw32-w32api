@@ -6,7 +6,7 @@ Version:	5.0.2
 %define	apisrc	w32api-%{apiver}-mingw32
 %define runver	5.0.2
 %define	runsrc	mingwrt-%{runver}-mingw32
-Release:	2
+Release:	3
 Epoch:		1
 License:	Free (Public Domain, SGI Free Software License B, BSD)
 Group:		Development/Libraries
@@ -22,6 +22,8 @@ Source3:	https://www.khronos.org/registry/OpenGL/api/GL/wgl.h
 # Source3-md5:	425b343fe764cfcc478db28566e0679a
 Source4:	https://www.khronos.org/registry/OpenGL/api/GL/wglext.h
 # Source4-md5:	6ab4da87f8e08c7a6f75fd846379eef8
+Source5:	https://www.khronos.org/registry/EGL/api/KHR/khrplatform.h
+# Source5-md5:	66cc4235af5b34a2bab8064904e80855
 Patch0:		%{name}-mmsystem.patch
 Patch1:		%{name}-winapi-update.patch
 URL:		http://www.mingw.org/
@@ -111,7 +113,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %{!?debug:%{target}-strip -g $RPM_BUILD_ROOT%{_libdir}/*.a}
 
+install -d $RPM_BUILD_ROOT%{_includedir}/KHR
 cp -p %{SOURCE2} %{SOURCE3} %{SOURCE4} $RPM_BUILD_ROOT%{_includedir}/GL
+cp -p %{SOURCE5} $RPM_BUILD_ROOT%{_includedir}/KHR
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -477,6 +481,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/xprtdefs.h
 %{_includedir}/zmouse.h
 %{_includedir}/GL
+%{_includedir}/KHR
 %{_includedir}/ddk
 %{_includedir}/gdiplus
 
