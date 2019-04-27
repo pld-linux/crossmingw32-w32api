@@ -725,6 +725,34 @@
  #endif	/* Win7 and later */
  #endif	/* Windows Vista and later */
  #endif	/* Windows Server-2003 and later */
+--- w32api-5.0.2/include/winnt.h.orig	2017-11-28 19:03:04.000000000 +0100
++++ w32api-5.0.2/include/winnt.h	2019-04-27 18:17:44.580734108 +0200
+@@ -2716,6 +2716,11 @@
+   ULONGLONG		OtherTransferCount;
+ } IO_COUNTERS, *PIO_COUNTERS;
+ 
++typedef struct FILE_ID_128
++{ ULONGLONG LowPart;
++  ULONGLONG HighPart;
++} FILE_ID_128, *PFILE_ID_128;
++
+ typedef struct _FILE_NOTIFY_INFORMATION
+ { DWORD 		NextEntryOffset;
+   DWORD 		Action;
+@@ -3765,6 +3770,13 @@
+ { DWORD 		MemberLevel;
+ } JOBOBJECT_JOBSET_INFORMATION, *PJOBOBJECT_JOBSET_INFORMATION;
+ 
++typedef enum _FIRMWARE_TYPE
++{ FirmwareTypeUnknown,
++  FirmwareTypeBios,
++  FirmwareTypeUefi,
++  FirmwareTypeMax
++} FIRMWARE_TYPE,*PFIRMWARE_TYPE;
++
+ /* Fixme: Making these defines conditional on WINVER will break ddk includes */
+ #if 1 /* (WINVER >= 0x0500) */
+ #include <pshpack4.h>
 --- w32api-5.0.2/include/ws2tcpip.h.orig	2017-11-09 02:35:48.000000000 +0100
 +++ w32api-5.0.2/include/ws2tcpip.h	2018-09-17 05:43:14.524718024 +0200
 @@ -356,6 +356,41 @@
