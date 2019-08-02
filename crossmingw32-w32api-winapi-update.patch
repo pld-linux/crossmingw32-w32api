@@ -1094,8 +1094,33 @@
  }
  #endif
 --- w32api-5.0.2/include/winreg.h.orig	2017-11-28 19:03:04.000000000 +0100
-+++ w32api-5.0.2/include/winreg.h	2018-09-18 20:52:03.946442081 +0200
-@@ -18,6 +18,9 @@
++++ w32api-5.0.2/include/winreg.h	2019-08-02 17:36:50.006055240 +0200
+@@ -11,6 +11,24 @@
+ #ifdef __cplusplus
+ extern "C" {
+ #endif
++
++#if (WINVER >= _WIN32_WINNT_VISTA)
++#define RRF_RT_REG_NONE 0x00000001
++#define RRF_RT_REG_SZ 0x00000002
++#define RRF_RT_REG_EXPAND_SZ 0x00000004
++#define RRF_RT_REG_BINARY 0x00000008
++#define RRF_RT_REG_DWORD 0x00000010
++#define RRF_RT_REG_MULTI_SZ 0x00000020
++#define RRF_RT_REG_QWORD 0x00000040
++
++#define RRF_RT_DWORD (RRF_RT_REG_BINARY | RRF_RT_REG_DWORD)
++#define RRF_RT_QWORD (RRF_RT_REG_BINARY | RRF_RT_REG_QWORD)
++#define RRF_RT_ANY 0x0000ffff
++
++#define RRF_NOEXPAND 0x10000000
++#define RRF_ZEROONFAILURE 0x20000000
++#endif
++
+ #define HKEY_CLASSES_ROOT	((HKEY)0x80000000)
+ #define HKEY_CURRENT_USER	((HKEY)0x80000001)
+ #define HKEY_LOCAL_MACHINE	((HKEY)0x80000002)
+@@ -18,6 +36,9 @@
  #define HKEY_PERFORMANCE_DATA	((HKEY)0x80000004)
  #define HKEY_CURRENT_CONFIG	((HKEY)0x80000005)
  #define HKEY_DYN_DATA	((HKEY)0x80000006)
@@ -1105,6 +1130,38 @@
  #define REG_OPTION_VOLATILE 1
  #define REG_OPTION_NON_VOLATILE 0
  #define REG_CREATED_NEW_KEY 1
+@@ -110,6 +131,11 @@
+ WINADVAPI LONG WINAPI RegSetValueW(HKEY,LPCWSTR,DWORD,LPCWSTR,DWORD);
+ WINADVAPI LONG WINAPI RegUnLoadKeyA(HKEY,LPCSTR);
+ WINADVAPI LONG WINAPI RegUnLoadKeyW(HKEY,LPCWSTR);
++#if (WINVER >= _WIN32_WINNT_VISTA)
++typedef LONG LSTATUS;
++WINADVAPI LONG WINAPI RegGetValueA(HKEY hkey,LPCSTR lpSubKey,LPCSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID pvData,LPDWORD pcbData);
++WINADVAPI LONG WINAPI RegGetValueW(HKEY hkey,LPCWSTR lpSubKey,LPCWSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID pvData,LPDWORD pcbData);
++#endif
+ 
+ #ifdef UNICODE
+ typedef VALENTW VALENT,*PVALENT;
+@@ -139,6 +165,9 @@
+ #define RegSetValue RegSetValueW
+ #define RegSetValueEx RegSetValueExW
+ #define RegUnLoadKey RegUnLoadKeyW
++#if (WINVER >= _WIN32_WINNT_VISTA)
++#define RegGetValue RegGetValueW
++#endif
+ #else
+ typedef VALENTA VALENT,*PVALENT;
+ #define AbortSystemShutdown AbortSystemShutdownA
+@@ -167,6 +196,9 @@
+ #define RegSetValue RegSetValueA
+ #define RegSetValueEx RegSetValueExA
+ #define RegUnLoadKey RegUnLoadKeyA
++#if (WINVER >= _WIN32_WINNT_VISTA)
++#define RegGetValue RegGetValueA
++#endif
+ #endif
+ #endif
+ #ifdef __cplusplus
 --- w32api-5.0.2/include/nldef.h.orig	1970-01-01 01:00:00.000000000 +0100
 +++ w32api-5.0.2/include/nldef.h	2018-09-19 20:48:36.358791357 +0200
 @@ -0,0 +1,193 @@
