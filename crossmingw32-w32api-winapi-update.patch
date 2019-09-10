@@ -1094,7 +1094,7 @@
  }
  #endif
 --- w32api-5.0.2/include/winreg.h.orig	2017-11-28 19:03:04.000000000 +0100
-+++ w32api-5.0.2/include/winreg.h	2019-08-02 17:36:50.006055240 +0200
++++ w32api-5.0.2/include/winreg.h	2019-09-10 20:05:21.217564282 +0200
 @@ -11,6 +11,24 @@
  #ifdef __cplusplus
  extern "C" {
@@ -1130,34 +1130,106 @@
  #define REG_OPTION_VOLATILE 1
  #define REG_OPTION_NON_VOLATILE 0
  #define REG_CREATED_NEW_KEY 1
-@@ -110,6 +131,11 @@
+@@ -68,6 +89,12 @@
+ WINADVAPI LONG WINAPI RegCreateKeyW(HKEY,LPCWSTR,PHKEY);
+ WINADVAPI LONG WINAPI RegDeleteKeyA(HKEY,LPCSTR);
+ WINADVAPI LONG WINAPI RegDeleteKeyW(HKEY,LPCWSTR);
++#if (WINVER >= _WIN32_WINNT_WINXP)
++WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExA(LPSTR,LPSTR,DWORD,WINBOOL,WINBOOL,DWORD);
++WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExW(LPWSTR,LPWSTR,DWORD,WINBOOL,WINBOOL,DWORD);
++WINADVAPI LONG WINAPI RegSaveKeyExA(HKEY,LPCSTR,LPSECURITY_ATTRIBUTES,DWORD);
++WINADVAPI LONG WINAPI RegSaveKeyExW(HKEY,LPCWSTR,LPSECURITY_ATTRIBUTES,DWORD);
++#endif
+ #if (WINVER >= 0x0502)
+ WINADVAPI LONG WINAPI RegDeleteKeyExA(HKEY,LPCSTR,REGSAM,DWORD);
+ WINADVAPI LONG WINAPI RegDeleteKeyExW(HKEY,LPCWSTR,REGSAM,DWORD);
+@@ -110,6 +137,32 @@
  WINADVAPI LONG WINAPI RegSetValueW(HKEY,LPCWSTR,DWORD,LPCWSTR,DWORD);
  WINADVAPI LONG WINAPI RegUnLoadKeyA(HKEY,LPCSTR);
  WINADVAPI LONG WINAPI RegUnLoadKeyW(HKEY,LPCWSTR);
 +#if (WINVER >= _WIN32_WINNT_VISTA)
 +typedef LONG LSTATUS;
-+WINADVAPI LONG WINAPI RegGetValueA(HKEY hkey,LPCSTR lpSubKey,LPCSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID pvData,LPDWORD pcbData);
-+WINADVAPI LONG WINAPI RegGetValueW(HKEY hkey,LPCWSTR lpSubKey,LPCWSTR lpValue,DWORD dwFlags,LPDWORD pdwType,PVOID pvData,LPDWORD pcbData);
++WINADVAPI LONG WINAPI RegGetValueA(HKEY,LPCSTR,LPCSTR,DWORD,LPDWORD,PVOID,LPDWORD);
++WINADVAPI LONG WINAPI RegGetValueW(HKEY,LPCWSTR,LPCWSTR,DWORD,LPDWORD,PVOID,LPDWORD);
++WINADVAPI LONG WINAPI RegCopyTreeA(HKEY,LPCSTR,HKEY);
++WINADVAPI LONG WINAPI RegCopyTreeW(HKEY,LPCWSTR,HKEY);
++WINADVAPI LONG WINAPI RegCreateKeyTransactedA(HKEY,LPCSTR,DWORD,LPSTR,DWORD,REGSAM,const LPSECURITY_ATTRIBUTES,PHKEY,LPDWORD,HANDLE,PVOID);
++WINADVAPI LONG WINAPI RegCreateKeyTransactedW(HKEY,LPCWSTR,DWORD,LPWSTR,DWORD,REGSAM,const LPSECURITY_ATTRIBUTES,PHKEY,LPDWORD,HANDLE,PVOID);
++WINADVAPI LONG WINAPI RegDeleteKeyTransactedA(HKEY,LPCSTR,REGSAM,DWORD,HANDLE,PVOID);
++WINADVAPI LONG WINAPI RegDeleteKeyTransactedW(HKEY,LPCWSTR,REGSAM,DWORD,HANDLE,PVOID);
++WINADVAPI LONG WINAPI RegDeleteKeyValueA(HKEY,LPCSTR,LPCSTR);
++WINADVAPI LONG WINAPI RegDeleteKeyValueW(HKEY,LPCWSTR,LPCWSTR);
++WINADVAPI LONG WINAPI RegDeleteTreeA(HKEY,LPCSTR);
++WINADVAPI LONG WINAPI RegDeleteTreeW(HKEY,LPCWSTR);
++WINADVAPI LONG WINAPI RegDisablePredefinedCacheEx(void);
++WINADVAPI LONG WINAPI RegLoadAppKeyA(LPCSTR,PHKEY,REGSAM,DWORD,DWORD);
++WINADVAPI LONG WINAPI RegLoadAppKeyW(LPCWSTR,PHKEY,REGSAM,DWORD,DWORD);
++WINADVAPI LONG WINAPI RegLoadMUIStringA(HKEY,LPCSTR,LPSTR,DWORD,LPDWORD,DWORD,LPCSTR);
++WINADVAPI LONG WINAPI RegLoadMUIStringW(HKEY,LPCWSTR,LPWSTR,DWORD,LPDWORD,DWORD,LPCWSTR);
++WINADVAPI LONG WINAPI RegOpenKeyTransactedA(HKEY,LPCSTR,DWORD,REGSAM,PHKEY,HANDLE,PVOID);
++WINADVAPI LONG WINAPI RegOpenKeyTransactedW(HKEY,LPCWSTR,DWORD,REGSAM,PHKEY,HANDLE,PVOID);
++WINADVAPI LONG WINAPI RegSetKeyValueA(HKEY,LPCSTR,LPCSTR,DWORD,LPCVOID,DWORD);
++WINADVAPI LONG WINAPI RegSetKeyValueW(HKEY,LPCWSTR,LPCWSTR,DWORD,LPCVOID,DWORD);
++WINADVAPI DWORD WINAPI InitiateShutdownA(LPSTR,LPSTR,DWORD,DWORD,DWORD);
++WINADVAPI DWORD WINAPI InitiateShutdownW(LPWSTR,LPWSTR,DWORD,DWORD,DWORD);
 +#endif
  
  #ifdef UNICODE
  typedef VALENTW VALENT,*PVALENT;
-@@ -139,6 +165,9 @@
+@@ -119,6 +172,9 @@
+ #define RegCreateKey RegCreateKeyW
+ #define RegCreateKeyEx RegCreateKeyExW
+ #define RegDeleteKey RegDeleteKeyW
++#if (WINVER >= _WIN32_WINNT_WINXP)
++#define RegSaveKeyEx RegSaveKeyExW
++#endif
+ #if (WINVER >= 0x0502)
+ #define RegDeleteKeyEx RegDeleteKeyExW
+ #endif
+@@ -139,6 +195,18 @@
  #define RegSetValue RegSetValueW
  #define RegSetValueEx RegSetValueExW
  #define RegUnLoadKey RegUnLoadKeyW
 +#if (WINVER >= _WIN32_WINNT_VISTA)
 +#define RegGetValue RegGetValueW
++#define RegCopyTree RegCopyTreeW
++#define RegCreateKeyTransacted RegCreateKeyTransactedW
++#define RegDeleteKeyValue RegDeleteKeyValueW
++#define RegDeleteTree RegDeleteTreeW
++#define RegLoadAppKey RegLoadAppKeyW
++#define RegLoadMUIString RegLoadMUIStringW
++#define RegOpenKeyTransacted RegOpenKeyTransactedW
++#define RegSetKeyValue RegSetKeyValueW
++#define InitiateShutdown InitiateShutdownW
 +#endif
  #else
  typedef VALENTA VALENT,*PVALENT;
  #define AbortSystemShutdown AbortSystemShutdownA
-@@ -167,6 +196,9 @@
+@@ -147,6 +215,9 @@
+ #define RegCreateKey RegCreateKeyA
+ #define RegCreateKeyEx RegCreateKeyExA
+ #define RegDeleteKey RegDeleteKeyA
++#if (WINVER >= _WIN32_WINNT_WINXP)
++#define RegSaveKeyEx RegSaveKeyExA
++#endif
+ #if (WINVER >= 0x0502)
+ #define RegDeleteKeyEx RegDeleteKeyExA
+ #endif
+@@ -167,6 +238,18 @@
  #define RegSetValue RegSetValueA
  #define RegSetValueEx RegSetValueExA
  #define RegUnLoadKey RegUnLoadKeyA
 +#if (WINVER >= _WIN32_WINNT_VISTA)
 +#define RegGetValue RegGetValueA
++#define RegCopyTree RegCopyTreeA
++#define RegCreateKeyTransacted RegCreateKeyTransactedA
++#define RegDeleteKeyValue RegDeleteKeyValueA
++#define RegDeleteTree RegDeleteTreeA
++#define RegLoadAppKey RegLoadAppKeyA
++#define RegLoadMUIString RegLoadMUIStringA
++#define RegOpenKeyTransacted RegOpenKeyTransactedA
++#define RegSetKeyValue RegSetKeyValueA
++#define InitiateShutdown InitiateShutdownA
 +#endif
  #endif
  #endif
