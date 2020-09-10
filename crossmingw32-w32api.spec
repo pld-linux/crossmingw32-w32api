@@ -6,7 +6,7 @@ Version:	5.0.2
 %define	apisrc	w32api-%{apiver}-mingw32
 %define runver	5.0.2
 %define	runsrc	mingwrt-%{runver}-mingw32
-Release:	8
+Release:	9
 Epoch:		1
 License:	Free (Public Domain, SGI Free Software License B, BSD)
 Group:		Development/Libraries
