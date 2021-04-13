@@ -19,7 +19,7 @@ Source1:	https://osdn.net/projects/mingw/downloads/74925/%{runsrc}-src.tar.xz
 # Source1-md5:	09f7ed7f4b134448ec4f9112f8a241f5
 # https://www.khronos.org/registry/OpenGL/api/GL/
 Source2:	https://www.khronos.org/registry/OpenGL/api/GL/glext.h
-# Source2-md5:	552cffa94ba8e628c9e62a6be08a7481
+# Source2-md5:	3aca9a2af659634ae4d50805f649f5f7
 Source3:	https://www.khronos.org/registry/OpenGL/api/GL/wgl.h
 # Source3-md5:	dd0de39b3f075eb3f2138d88b1b3df68
 Source4:	https://www.khronos.org/registry/OpenGL/api/GL/wglext.h
