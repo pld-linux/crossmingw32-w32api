@@ -1,14 +1,14 @@
---- w32api-5.0.2/include/winbase.h.orig	2017-11-09 02:35:48.000000000 +0100
-+++ w32api-5.0.2/include/winbase.h	2018-09-16 12:54:28.225409121 +0200
-@@ -270,6 +270,7 @@
- #define FILE_FLAG_DELETE_ON_CLOSE				67108864
- #define FILE_FLAG_BACKUP_SEMANTICS				33554432
- #define FILE_FLAG_POSIX_SEMANTICS				16777216
-+#define FILE_FLAG_SESSION_AWARE					0x800000
- #define FILE_FLAG_OPEN_REPARSE_POINT				 2097152
- #define FILE_FLAG_OPEN_NO_RECALL				 1048576
+--- w32api-5.4.2/include/winbase.h.orig	2021-02-09 23:05:36.000000000 +0100
++++ w32api-5.4.2/include/winbase.h	2021-04-13 21:40:17.776045208 +0200
+@@ -270,6 +270,7 @@ _BEGIN_C_DECLS
+ #define FILE_FLAG_DELETE_ON_CLOSE			      0x04000000
+ #define FILE_FLAG_BACKUP_SEMANTICS			      0x02000000
+ #define FILE_FLAG_POSIX_SEMANTICS			      0x01000000
++#define FILE_FLAG_SESSION_AWARE				      0x00800000
+ #define FILE_FLAG_OPEN_REPARSE_POINT			      0x00200000
+ #define FILE_FLAG_OPEN_NO_RECALL			      0x00100000
  
-@@ -453,6 +453,10 @@
+@@ -452,6 +453,10 @@ _BEGIN_C_DECLS
  #define DONT_RESOLVE_DLL_REFERENCES				       1
  #define LOAD_LIBRARY_AS_DATAFILE				       2
  #define LOAD_WITH_ALTERED_SEARCH_PATH				       8
@@ -19,7 +19,7 @@
  
  #define LMEM_FIXED						       0
  #define LMEM_MOVEABLE						       2
-@@ -486,6 +487,8 @@
+@@ -486,6 +491,8 @@ _BEGIN_C_DECLS
  #define MOVEFILE_COPY_ALLOWED					       2
  #define MOVEFILE_DELAY_UNTIL_REBOOT				       4
  #define MOVEFILE_WRITE_THROUGH					       8
@@ -28,7 +28,7 @@
  
  #define MAXIMUM_WAIT_OBJECTS					      64
  #define MAXIMUM_SUSPEND_COUNT					    0x7F
-@@ -598,11 +601,13 @@
+@@ -598,11 +605,13 @@ _BEGIN_C_DECLS
  #define BACKUP_OBJECT_ID					       7
  #define BACKUP_REPARSE_DATA					       8
  #define BACKUP_SPARSE_BLOCK					       9
@@ -42,7 +42,7 @@
  
  #define STARTF_USESHOWWINDOW					       1
  #define STARTF_USESIZE						       2
-@@ -614,6 +619,9 @@
+@@ -614,6 +623,9 @@ _BEGIN_C_DECLS
  #define STARTF_FORCEOFFFEEDBACK 				     128
  #define STARTF_USESTDHANDLES					     256
  #define STARTF_USEHOTKEY					     512
@@ -52,7 +52,7 @@
  
  #define TC_NORMAL						       0
  #define TC_HARDERR						       1
-@@ -637,6 +645,8 @@
+@@ -637,6 +649,8 @@ _BEGIN_C_DECLS
  #define DDD_RAW_TARGET_PATH					       1
  #define DDD_REMOVE_DEFINITION					       2
  #define DDD_EXACT_MATCH_ON_REMOVE				       4
@@ -61,7 +61,7 @@
  
  #define HINSTANCE_ERROR 					      32
  
-@@ -698,6 +708,8 @@
+@@ -698,6 +712,8 @@ _BEGIN_C_DECLS
  #define REPLACEFILE_WRITE_THROUGH			      0x00000001
  #define REPLACEFILE_IGNORE_MERGE_ERRORS 		      0x00000002
  
@@ -70,7 +70,7 @@
  #if (_WIN32_WINNT > 0x0501)
  /* FIXME: Once again, what does this mean?  Should use >= comparator, for
   * clarity.  0x0501 is WinXP, but does > WinXP mean Server-2003 (0x0502)?
-@@ -723,6 +735,7 @@
+@@ -723,6 +739,7 @@ _BEGIN_C_DECLS
  #define QUERY_ACTCTX_FLAG_USE_ACTIVE_ACTCTX		      0x00000004
  #define QUERY_ACTCTX_FLAG_ACTCTX_IS_HMODULE		      0x00000008
  #define QUERY_ACTCTX_FLAG_ACTCTX_IS_ADDRESS		      0x00000010
@@ -78,7 +78,7 @@
  
  #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
  /* Constants associated with features supported only on Vista and later.
-@@ -742,12 +755,85 @@
+@@ -742,12 +759,85 @@ _BEGIN_C_DECLS
  #define VOLUME_NAME_NONE					     0x4
  #define VOLUME_NAME_NT						     0x2
  
@@ -164,7 +164,7 @@
  #endif	/* Win7 and later */
  #endif	/* WinVista and later */
  #endif	/* WinXP and later */
-@@ -1346,6 +1432,7 @@
+@@ -1346,6 +1436,7 @@ WINBASEAPI BOOL WINAPI CallNamedPipeA
  WINBASEAPI BOOL WINAPI CallNamedPipeW
  (LPCWSTR, PVOID, DWORD, PVOID, DWORD, PDWORD, DWORD);
  
@@ -172,7 +172,7 @@
  WINBASEAPI BOOL WINAPI CancelDeviceWakeupRequest (HANDLE);
  WINBASEAPI BOOL WINAPI CancelIo (HANDLE);
  WINBASEAPI BOOL WINAPI CancelWaitableTimer (HANDLE);
-@@ -1691,6 +1778,8 @@
+@@ -1691,6 +1782,8 @@ WINBASEAPI BOOL WINAPI GetDefaultCommCon
  
  WINBASEAPI BOOL WINAPI GetDevicePowerState (HANDLE, BOOL *);
  
@@ -181,7 +181,7 @@
  #define GetDiskFreeSpace __AW_SUFFIXED__(GetDiskFreeSpace)
  WINBASEAPI BOOL WINAPI GetDiskFreeSpaceA
  (LPCSTR, PDWORD, PDWORD, PDWORD, PDWORD);
-@@ -2034,6 +2123,7 @@
+@@ -2034,6 +2127,7 @@ WINBASEAPI BOOL WINAPI IsBadStringPtrW (
  WINBASEAPI BOOL WINAPI IsBadWritePtr (PVOID, UINT);
  WINBASEAPI BOOL WINAPI IsDebuggerPresent (void);
  WINBASEAPI BOOL WINAPI IsProcessorFeaturePresent (DWORD);
@@ -189,7 +189,7 @@
  WINBASEAPI BOOL WINAPI IsSystemResumeAutomatic (void);
  WINBASEAPI BOOL WINAPI IsTextUnicode (PCVOID, int, LPINT);
  WINBASEAPI BOOL WINAPI IsValidAcl (PACL);
-@@ -2516,6 +2606,8 @@
+@@ -2516,6 +2610,8 @@ WINBASEAPI DWORD WINAPI WriteTapemark (H
  WINBASEAPI BOOL WINAPI ConvertFiberToThread (void);
  WINBASEAPI LPVOID WINAPI CreateFiberEx
  (SIZE_T, SIZE_T, DWORD, LPFIBER_START_ROUTINE, LPVOID);
@@ -198,7 +198,7 @@
  #endif	/* Win9x, but not WinNT until NT4 */
  
  #if _WIN32_WINDOWS >= _WIN32_WINDOWS_98 || _WIN32_WINNT >= _WIN32_WINNT_WIN2K
-@@ -2597,6 +2689,7 @@
+@@ -2597,6 +2693,7 @@ WINBASEAPI BOOL WINAPI CreateProcessWith
  );
  #define LOGON_WITH_PROFILE		0x00000001
  #define LOGON_NETCREDENTIALS_ONLY	0x00000002
@@ -206,18 +206,17 @@
  
  WINBASEAPI BOOL WINAPI CreateRestrictedToken
  ( HANDLE, DWORD, DWORD, PSID_AND_ATTRIBUTES, DWORD, PLUID_AND_ATTRIBUTES,
-@@ -2615,6 +2708,10 @@
+@@ -2615,6 +2712,9 @@ WINBASEAPI BOOL WINAPI DeleteTimerQueue
  WINBASEAPI BOOL WINAPI DeleteTimerQueueEx (HANDLE, HANDLE);
  WINBASEAPI BOOL WINAPI DeleteTimerQueueTimer (HANDLE, HANDLE, HANDLE);
  
 +WINBASEAPI HANDLE WINAPI SetTimerQueueTimer (HANDLE TimerQueue, WAITORTIMERCALLBACK Callback, PVOID Parameter, DWORD DueTime, DWORD Period, BOOL PreferIo);
 +WINBASEAPI BOOL WINAPI CancelTimerQueueTimer (HANDLE TimerQueue, HANDLE Timer);
-+WINBASEAPI BOOL WINAPI DeleteTimerQueue (HANDLE TimerQueue);
 +
  #define DeleteVolumeMountPoint __AW_SUFFIXED__(DeleteVolumeMountPoint)
  WINBASEAPI BOOL WINAPI DeleteVolumeMountPointA (LPCSTR);
  WINBASEAPI BOOL WINAPI DeleteVolumeMountPointW (LPCWSTR);
-@@ -2711,6 +2808,12 @@
+@@ -2711,6 +2811,12 @@ WINBASEAPI BOOL WINAPI MapUserPhysicalPa
  WINBASEAPI BOOL WINAPI MapUserPhysicalPagesScatter
  (PVOID *, ULONG_PTR, PULONG_PTR);
  
@@ -230,7 +229,7 @@
  #if _WIN32_WINNT >= _WIN32_WINNT_WINXP
  /* New features, implemented for WinXP; not available in Win9x.
   */
-@@ -2845,6 +2948,29 @@
+@@ -2845,6 +2951,29 @@ WINBASEAPI BOOL WINAPI TzSpecificLocalTi
  
  WINBASEAPI BOOL WINAPI ZombifyActCtx (HANDLE);
  
@@ -260,7 +259,7 @@
  #if _WIN32_WINNT >= _WIN32_WINNT_WS03
  /* Further added features, which became available on the WinNT platform
   * from Windows Server-2003; these were never made available in Win9x.
-@@ -2902,6 +3023,21 @@
+@@ -2902,6 +3031,21 @@ typedef struct _FILE_NAME_INFO
    WCHAR 			FileName[1];
  } FILE_NAME_INFO, *PFILE_NAME_INFO, *LPFILE_NAME_INFO;
  
@@ -282,7 +281,7 @@
  typedef struct _FILE_STREAM_INFO
  /* http://msdn.microsoft.com/en-us/library/aa364406%28v=VS.85%29.aspx */
  { DWORD 			NextEntryOffset;
-@@ -2927,6 +3063,10 @@
+@@ -2927,6 +3071,10 @@ typedef struct _FILE_ATTRIBUTE_TAG_INFO
    DWORD 			ReparseTag;
  } FILE_ATTRIBUTE_TAG_INFO, *PFILE_ATTRIBUTE_TAG_INFO, *LPFILE_ATTRIBUTE_TAG_INFO;
  
@@ -293,7 +292,7 @@
  typedef struct _FILE_ID_BOTH_DIR_INFO
  /* http://msdn.microsoft.com/en-us/library/aa364226%28v=VS.85%29.aspx */
  { DWORD 			NextEntryOffset;
-@@ -2946,6 +3086,32 @@
+@@ -2946,6 +3094,32 @@ typedef struct _FILE_ID_BOTH_DIR_INFO
    WCHAR 			FileName[1];
  } FILE_ID_BOTH_DIR_INFO, *PFILE_ID_BOTH_DIR_INFO, *LPFILE_ID_BOTH_DIR_INFO;
  
@@ -326,7 +325,7 @@
  typedef struct _FILE_REMOTE_PROTOCOL_INFO
  /* http://msdn.microsoft.com/en-us/library/dd979524%28v=VS.85%29.aspx */
  { USHORT			StructureVersion;
-@@ -2959,9 +3125,24 @@
+@@ -2959,9 +3133,24 @@ typedef struct _FILE_REMOTE_PROTOCOL_INF
    struct
    { ULONG			  Reserved[8];
    }				GenericReserved;
@@ -351,7 +350,7 @@
  } FILE_REMOTE_PROTOCOL_INFO, *PFILE_REMOTE_PROTOCOL_INFO, *LPFILE_REMOTE_PROTOCOL_INFO;
  
  typedef enum _DEP_SYSTEM_POLICY_TYPE
-@@ -2994,6 +3175,10 @@
+@@ -2994,6 +3183,10 @@ typedef enum _FILE_INFO_BY_HANDLE_CLASS
  WINBASEAPI BOOL WINAPI CreateSymbolicLinkA (LPCSTR, LPCSTR, DWORD);
  WINBASEAPI BOOL WINAPI CreateSymbolicLinkW (LPCWSTR, LPCWSTR, DWORD);
  
@@ -362,7 +361,7 @@
  /* http://msdn.microsoft.com/en-us/library/aa364953%28VS.85%29.aspx */
  WINBASEAPI BOOL WINAPI GetFileInformationByHandleEx
  (HANDLE, FILE_INFO_BY_HANDLE_CLASS, LPVOID, DWORD);
-@@ -3029,6 +3214,202 @@
+@@ -3029,6 +3222,202 @@ BOOL WINAPI SleepConditionVariableSRW (P
  void WINAPI WakeAllConditionVariable (PCONDITION_VARIABLE);
  void WINAPI WakeConditionVariable (PCONDITION_VARIABLE);
  
@@ -565,7 +564,7 @@
  #if _WIN32_WINNT >= _WIN32_WINNT_WIN7
  /* Additional features, available only on the WinNT series platforms, from
   * the release of Windows-7 onwards.
-@@ -3042,6 +3417,161 @@
+@@ -3042,6 +3431,161 @@ WINBASEAPI BOOL WINAPI SetProcessDEPPoli
  BOOLEAN WINAPI TryAcquireSRWLockExclusive (PSRWLOCK);
  BOOLEAN WINAPI TryAcquireSRWLockShared (PSRWLOCK);
  
@@ -727,9 +726,9 @@
  #endif	/* Win7 and later */
  #endif	/* Windows Vista and later */
  #endif	/* Windows Server-2003 and later */
---- w32api-5.0.2/include/winnt.h.orig	2017-11-28 19:03:04.000000000 +0100
-+++ w32api-5.0.2/include/winnt.h	2019-04-27 18:17:44.580734108 +0200
-@@ -2716,6 +2716,11 @@
+--- w32api-5.4.1/include/winnt.h.orig	2020-03-11 21:42:26.000000000 +0100
++++ w32api-5.4.1/include/winnt.h	2021-03-22 21:20:36.597967933 +0100
+@@ -2718,6 +2718,11 @@ typedef struct _IO_COUNTERS
    ULONGLONG		OtherTransferCount;
  } IO_COUNTERS, *PIO_COUNTERS;
  
@@ -741,7 +740,7 @@
  typedef struct _FILE_NOTIFY_INFORMATION
  { DWORD 		NextEntryOffset;
    DWORD 		Action;
-@@ -3765,6 +3770,13 @@
+@@ -3767,6 +3772,13 @@ typedef struct _JOBOBJECT_JOBSET_INFORMA
  { DWORD 		MemberLevel;
  } JOBOBJECT_JOBSET_INFORMATION, *PJOBOBJECT_JOBSET_INFORMATION;
  
@@ -755,11 +754,11 @@
  /* Fixme: Making these defines conditional on WINVER will break ddk includes */
  #if 1 /* (WINVER >= 0x0500) */
  #include <pshpack4.h>
---- w32api-5.0.2/include/ws2tcpip.h.orig	2017-11-09 02:35:48.000000000 +0100
-+++ w32api-5.0.2/include/ws2tcpip.h	2018-09-17 05:43:14.524718024 +0200
-@@ -356,6 +356,41 @@
- 	sockaddr_gen	iiNetmask;
- } INTERFACE_INFO, *LPINTERFACE_INFO;
+--- w32api-5.4.1/include/ws2tcpip.h.orig	2021-03-22 21:20:36.601301248 +0100
++++ w32api-5.4.1/include/ws2tcpip.h	2021-03-22 21:44:19.566925715 +0100
+@@ -510,6 +510,187 @@ typedef struct _OLD_INTERFACE_INFO
+ } OLD_INTERFACE_INFO;
+ #endif
  
 +typedef enum _MULTICAST_MODE_TYPE {
 +  MCAST_INCLUDE   = 0,
@@ -796,13 +795,6 @@
 +  SOCKADDR_STORAGE gsr_source;
 +} GROUP_SOURCE_REQ, *PGROUP_SOURCE_REQ;
 +
- /*
-    The definition above can cause problems on NT4,prior to sp4.
-    To workaround, include the following struct and typedef and
-@@ -373,6 +373,152 @@
- } OLD_INTERFACE_INFO;
- */
- 
 +#if _WIN32_WINNT >= _WIN32_WINNT_VISTA
 +
 +#define addrinfoEx __AW_SUFFIXED__(addrinfoEx)
@@ -949,9 +941,9 @@
 +
 +#endif /* Vista */
 +
- #ifdef  __cplusplus
- }
- #endif
+ _END_C_DECLS
+ 
+ #endif	/* !_WS2TCPIP_H: $RCSfile: ws2tcpip.h,v $: end of file */
 --- w32api-5.0.2/include/ifdef.h.orig	1970-01-01 01:00:00.000000000 +0100
 +++ w32api-5.0.2/include/ifdef.h	2018-09-18 18:11:18.793218987 +0200
 @@ -0,0 +1,118 @@
@@ -1095,147 +1087,73 @@
  #ifdef __cplusplus
  }
  #endif
---- w32api-5.0.2/include/winreg.h.orig	2017-11-28 19:03:04.000000000 +0100
-+++ w32api-5.0.2/include/winreg.h	2019-09-10 20:05:21.217564282 +0200
-@@ -11,6 +11,24 @@
- #ifdef __cplusplus
- extern "C" {
- #endif
-+
+--- w32api-5.4.2/include/winreg.h.orig	2020-03-11 21:42:26.000000000 +0100
++++ w32api-5.4.2/include/winreg.h	2021-04-13 21:48:20.183431783 +0200
+@@ -50,6 +50,8 @@ _BEGIN_C_DECLS
+ #define HKEY_PERFORMANCE_DATA		((HKEY)(0x80000004))
+ #define HKEY_CURRENT_CONFIG		((HKEY)(0x80000005))
+ #define HKEY_DYN_DATA			((HKEY)(0x80000006))
++#define HKEY_PERFORMANCE_TEXT		((HKEY)(0x80000050))
++#define HKEY_PERFORMANCE_NLSTEXT	((HKEY)(0x80000060))
+ 
+ #define REG_OPTION_VOLATILE 				 1
+ #define REG_OPTION_NON_VOLATILE 			 0
+@@ -81,6 +83,7 @@ _BEGIN_C_DECLS
+ #define REG_NOTIFY_CHANGE_SECURITY			 8
+ 
+ /* https://msdn.microsoft.com/en-us/library/ms724868%28v=vs.85%29.aspx */
 +#if (WINVER >= _WIN32_WINNT_VISTA)
-+#define RRF_RT_REG_NONE 0x00000001
-+#define RRF_RT_REG_SZ 0x00000002
-+#define RRF_RT_REG_EXPAND_SZ 0x00000004
-+#define RRF_RT_REG_BINARY 0x00000008
-+#define RRF_RT_REG_DWORD 0x00000010
-+#define RRF_RT_REG_MULTI_SZ 0x00000020
-+#define RRF_RT_REG_QWORD 0x00000040
-+
-+#define RRF_RT_DWORD (RRF_RT_REG_BINARY | RRF_RT_REG_DWORD)
-+#define RRF_RT_QWORD (RRF_RT_REG_BINARY | RRF_RT_REG_QWORD)
-+#define RRF_RT_ANY 0x0000ffff
-+
-+#define RRF_NOEXPAND 0x10000000
-+#define RRF_ZEROONFAILURE 0x20000000
-+#endif
-+
- #define HKEY_CLASSES_ROOT	((HKEY)0x80000000)
- #define HKEY_CURRENT_USER	((HKEY)0x80000001)
- #define HKEY_LOCAL_MACHINE	((HKEY)0x80000002)
-@@ -18,6 +36,9 @@
- #define HKEY_PERFORMANCE_DATA	((HKEY)0x80000004)
- #define HKEY_CURRENT_CONFIG	((HKEY)0x80000005)
- #define HKEY_DYN_DATA	((HKEY)0x80000006)
-+#define HKEY_PERFORMANCE_TEXT ((HKEY)0x80000050)
-+#define HKEY_PERFORMANCE_NLSTEXT ((HKEY)0x80000060)
-+
- #define REG_OPTION_VOLATILE 1
- #define REG_OPTION_NON_VOLATILE 0
- #define REG_CREATED_NEW_KEY 1
-@@ -68,6 +89,12 @@
- WINADVAPI LONG WINAPI RegCreateKeyW(HKEY,LPCWSTR,PHKEY);
- WINADVAPI LONG WINAPI RegDeleteKeyA(HKEY,LPCSTR);
- WINADVAPI LONG WINAPI RegDeleteKeyW(HKEY,LPCWSTR);
-+#if (WINVER >= _WIN32_WINNT_WINXP)
-+WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExA(LPSTR,LPSTR,DWORD,WINBOOL,WINBOOL,DWORD);
-+WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExW(LPWSTR,LPWSTR,DWORD,WINBOOL,WINBOOL,DWORD);
-+WINADVAPI LONG WINAPI RegSaveKeyExA(HKEY,LPCSTR,LPSECURITY_ATTRIBUTES,DWORD);
-+WINADVAPI LONG WINAPI RegSaveKeyExW(HKEY,LPCWSTR,LPSECURITY_ATTRIBUTES,DWORD);
-+#endif
- #if (WINVER >= 0x0502)
- WINADVAPI LONG WINAPI RegDeleteKeyExA(HKEY,LPCSTR,REGSAM,DWORD);
- WINADVAPI LONG WINAPI RegDeleteKeyExW(HKEY,LPCWSTR,REGSAM,DWORD);
-@@ -110,6 +137,32 @@
- WINADVAPI LONG WINAPI RegSetValueW(HKEY,LPCWSTR,DWORD,LPCWSTR,DWORD);
- WINADVAPI LONG WINAPI RegUnLoadKeyA(HKEY,LPCSTR);
- WINADVAPI LONG WINAPI RegUnLoadKeyW(HKEY,LPCWSTR);
-+#if (WINVER >= _WIN32_WINNT_VISTA)
-+typedef LONG LSTATUS;
-+WINADVAPI LONG WINAPI RegGetValueA(HKEY,LPCSTR,LPCSTR,DWORD,LPDWORD,PVOID,LPDWORD);
-+WINADVAPI LONG WINAPI RegGetValueW(HKEY,LPCWSTR,LPCWSTR,DWORD,LPDWORD,PVOID,LPDWORD);
-+WINADVAPI LONG WINAPI RegCopyTreeA(HKEY,LPCSTR,HKEY);
-+WINADVAPI LONG WINAPI RegCopyTreeW(HKEY,LPCWSTR,HKEY);
-+WINADVAPI LONG WINAPI RegCreateKeyTransactedA(HKEY,LPCSTR,DWORD,LPSTR,DWORD,REGSAM,const LPSECURITY_ATTRIBUTES,PHKEY,LPDWORD,HANDLE,PVOID);
-+WINADVAPI LONG WINAPI RegCreateKeyTransactedW(HKEY,LPCWSTR,DWORD,LPWSTR,DWORD,REGSAM,const LPSECURITY_ATTRIBUTES,PHKEY,LPDWORD,HANDLE,PVOID);
-+WINADVAPI LONG WINAPI RegDeleteKeyTransactedA(HKEY,LPCSTR,REGSAM,DWORD,HANDLE,PVOID);
-+WINADVAPI LONG WINAPI RegDeleteKeyTransactedW(HKEY,LPCWSTR,REGSAM,DWORD,HANDLE,PVOID);
-+WINADVAPI LONG WINAPI RegDeleteKeyValueA(HKEY,LPCSTR,LPCSTR);
-+WINADVAPI LONG WINAPI RegDeleteKeyValueW(HKEY,LPCWSTR,LPCWSTR);
-+WINADVAPI LONG WINAPI RegDeleteTreeA(HKEY,LPCSTR);
-+WINADVAPI LONG WINAPI RegDeleteTreeW(HKEY,LPCWSTR);
-+WINADVAPI LONG WINAPI RegDisablePredefinedCacheEx(void);
-+WINADVAPI LONG WINAPI RegLoadAppKeyA(LPCSTR,PHKEY,REGSAM,DWORD,DWORD);
-+WINADVAPI LONG WINAPI RegLoadAppKeyW(LPCWSTR,PHKEY,REGSAM,DWORD,DWORD);
-+WINADVAPI LONG WINAPI RegLoadMUIStringA(HKEY,LPCSTR,LPSTR,DWORD,LPDWORD,DWORD,LPCSTR);
-+WINADVAPI LONG WINAPI RegLoadMUIStringW(HKEY,LPCWSTR,LPWSTR,DWORD,LPDWORD,DWORD,LPCWSTR);
-+WINADVAPI LONG WINAPI RegOpenKeyTransactedA(HKEY,LPCSTR,DWORD,REGSAM,PHKEY,HANDLE,PVOID);
-+WINADVAPI LONG WINAPI RegOpenKeyTransactedW(HKEY,LPCWSTR,DWORD,REGSAM,PHKEY,HANDLE,PVOID);
-+WINADVAPI LONG WINAPI RegSetKeyValueA(HKEY,LPCSTR,LPCSTR,DWORD,LPCVOID,DWORD);
-+WINADVAPI LONG WINAPI RegSetKeyValueW(HKEY,LPCWSTR,LPCWSTR,DWORD,LPCVOID,DWORD);
-+WINADVAPI DWORD WINAPI InitiateShutdownA(LPSTR,LPSTR,DWORD,DWORD,DWORD);
-+WINADVAPI DWORD WINAPI InitiateShutdownW(LPWSTR,LPWSTR,DWORD,DWORD,DWORD);
+ #define RRF_RT_REG_NONE 			0x00000001
+ #define RRF_RT_REG_SZ				0x00000002
+ #define RRF_RT_REG_EXPAND_SZ			0x00000004
+@@ -95,6 +98,7 @@ _BEGIN_C_DECLS
+ #define RRF_SUBKEY_WOW6432KEY			0x00020000
+ #define RRF_NOEXPAND				0x10000000
+ #define RRF_ZEROONFAILURE			0x20000000
 +#endif
  
- #ifdef UNICODE
- typedef VALENTW VALENT,*PVALENT;
-@@ -119,6 +172,9 @@
- #define RegCreateKey RegCreateKeyW
- #define RegCreateKeyEx RegCreateKeyExW
- #define RegDeleteKey RegDeleteKeyW
-+#if (WINVER >= _WIN32_WINNT_WINXP)
-+#define RegSaveKeyEx RegSaveKeyExW
-+#endif
- #if (WINVER >= 0x0502)
- #define RegDeleteKeyEx RegDeleteKeyExW
- #endif
-@@ -139,6 +195,18 @@
- #define RegSetValue RegSetValueW
- #define RegSetValueEx RegSetValueExW
- #define RegUnLoadKey RegUnLoadKeyW
-+#if (WINVER >= _WIN32_WINNT_VISTA)
-+#define RegGetValue RegGetValueW
-+#define RegCopyTree RegCopyTreeW
-+#define RegCreateKeyTransacted RegCreateKeyTransactedW
-+#define RegDeleteKeyValue RegDeleteKeyValueW
-+#define RegDeleteTree RegDeleteTreeW
-+#define RegLoadAppKey RegLoadAppKeyW
-+#define RegLoadMUIString RegLoadMUIStringW
-+#define RegOpenKeyTransacted RegOpenKeyTransactedW
-+#define RegSetKeyValue RegSetKeyValueW
-+#define InitiateShutdown InitiateShutdownW
-+#endif
- #else
- typedef VALENTA VALENT,*PVALENT;
- #define AbortSystemShutdown AbortSystemShutdownA
-@@ -147,6 +215,9 @@
- #define RegCreateKey RegCreateKeyA
- #define RegCreateKeyEx RegCreateKeyExA
- #define RegDeleteKey RegDeleteKeyA
-+#if (WINVER >= _WIN32_WINNT_WINXP)
-+#define RegSaveKeyEx RegSaveKeyExA
-+#endif
- #if (WINVER >= 0x0502)
- #define RegDeleteKeyEx RegDeleteKeyExA
- #endif
-@@ -167,6 +238,18 @@
- #define RegSetValue RegSetValueA
- #define RegSetValueEx RegSetValueExA
- #define RegUnLoadKey RegUnLoadKeyA
-+#if (WINVER >= _WIN32_WINNT_VISTA)
-+#define RegGetValue RegGetValueA
-+#define RegCopyTree RegCopyTreeA
-+#define RegCreateKeyTransacted RegCreateKeyTransactedA
-+#define RegDeleteKeyValue RegDeleteKeyValueA
-+#define RegDeleteTree RegDeleteTreeA
-+#define RegLoadAppKey RegLoadAppKeyA
-+#define RegLoadMUIString RegLoadMUIStringA
-+#define RegOpenKeyTransacted RegOpenKeyTransactedA
-+#define RegSetKeyValue RegSetKeyValueA
-+#define InitiateShutdown InitiateShutdownA
-+#endif
- #endif
- #endif
- #ifdef __cplusplus
+ /* https://msdn.microsoft.com/en-us/library/ms724919%28v=vs.85%29.aspx */
+ #define REG_STANDARD_FORMAT				 1
+@@ -263,6 +267,10 @@ WINADVAPI LONG WINAPI RegUnLoadKeyA (HKE
+ WINADVAPI LONG WINAPI RegUnLoadKeyW (HKEY, LPCWSTR);
+ 
+ #if _WIN32_WINNT >= _WIN32_WINNT_WINXP
++#define InitiateSystemShutdownEx __AW_SUFFIXED__(InitiateSystemShutdownEx)
++WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExA(LPSTR,LPSTR,DWORD,WINBOOL,WINBOOL,DWORD);
++WINADVAPI WINBOOL WINAPI InitiateSystemShutdownExW(LPWSTR,LPWSTR,DWORD,WINBOOL,WINBOOL,DWORD);
++
+ #define RegSaveKeyEx __AW_SUFFIXED__(RegSaveKeyEx)
+ /* https://msdn.microsoft.com/en-us/library/ms724919%28v=vs.85%29.aspx */
+ WINADVAPI LONG WINAPI RegSaveKeyExA (HKEY, LPCSTR, LPSECURITY_ATTRIBUTES, DWORD);
+@@ -283,6 +291,8 @@ WINADVAPI LONG WINAPI RegEnableReflectio
+ WINADVAPI LONG WINAPI RegQueryReflectionKey (HKEY, BOOL *);
+ 
+ #if _WIN32_WINNT >= _WIN32_WINNT_VISTA
++typedef LONG LSTATUS;
++
+ #define RegCopyTree __AW_SUFFIXED__(RegCopyTree)
+ /* https://msdn.microsoft.com/en-us/library/aa379768%28v=vs.85%29.aspx */
+ WINADVAPI LONG WINAPI RegCopyTreeA (HKEY, LPCSTR, HKEY);
+@@ -327,6 +337,9 @@ WINADVAPI LONG WINAPI RegGetValueA
+ WINADVAPI LONG WINAPI RegGetValueW
+   ( HKEY, LPCWSTR, LPCWSTR, DWORD, LPDWORD, PVOID, LPDWORD
+   );
++#define RegLoadAppKey __AW_SUFFIXED__(RegLoadAppKey)
++WINADVAPI LONG WINAPI RegLoadAppKeyA(LPCSTR,PHKEY,REGSAM,DWORD,DWORD);
++WINADVAPI LONG WINAPI RegLoadAppKeyW(LPCWSTR,PHKEY,REGSAM,DWORD,DWORD);
+ #define RegLoadMUIString __AW_SUFFIXED__(RegLoadMUIString)
+ /* https://msdn.microsoft.com/en-us/library/ms724890%28v=vs.85%29.aspx */
+ WINADVAPI LONG WINAPI RegLoadMUIStringA
+@@ -351,6 +364,9 @@ WINADVAPI LONG WINAPI RegSetKeyValueA
+ WINADVAPI LONG WINAPI RegSetKeyValueW
+   ( HKEY, LPCWSTR, LPCWSTR, DWORD, LPCVOID, DWORD
+   );
++#define InitiateShutdown __AW_SUFFIXED__(InitiateShutdown)
++WINADVAPI DWORD WINAPI InitiateShutdownA(LPSTR,LPSTR,DWORD,DWORD,DWORD);
++WINADVAPI DWORD WINAPI InitiateShutdownW(LPWSTR,LPWSTR,DWORD,DWORD,DWORD);
+ #endif	/* _WIN32_WINNT >= _WIN32_WINNT_VISTA */
+ #endif	/* _WIN32_WINNT >= _WIN32_WINNT_WS03 */
+ #endif	/* _WIN32_WINNT >= _WIN32_WINNT_WINXP */
 --- w32api-5.0.2/include/nldef.h.orig	1970-01-01 01:00:00.000000000 +0100
 +++ w32api-5.0.2/include/nldef.h	2018-09-19 20:48:36.358791357 +0200
 @@ -0,0 +1,193 @@
@@ -6527,9 +6445,9 @@
 +#endif
 + */
 +#endif
---- w32api-5.0.2/include/winsock2.h.orig	2017-11-28 14:28:34.000000000 +0100
-+++ w32api-5.0.2/include/winsock2.h	2018-09-24 21:27:52.022015050 +0200
-@@ -627,6 +627,7 @@
+--- w32api-5.4.1/include/winsock2.h.orig	2020-03-11 21:42:26.000000000 +0100
++++ w32api-5.4.1/include/winsock2.h	2021-03-22 21:20:36.687967445 +0100
+@@ -634,6 +634,7 @@ typedef int (PASCAL *LPFN_WSACANCELASYNC
  typedef int (PASCAL *LPFN_WSAASYNCSELECT) (SOCKET, HWND, u_int, long);
  
  typedef struct sockaddr_storage SOCKADDR_STORAGE, *PSOCKADDR_STORAGE;
@@ -6537,13 +6455,17 @@
  
  WINSOCK_API_LINKAGE SOCKET WINAPI WSAAccept (SOCKET, struct sockaddr *, LPINT, LPCONDITIONPROC, DWORD);
  
---- w32api/include/iptypes.h.orig	2017-11-28 19:03:04.000000000 +0100
-+++ w32api/include/iptypes.h	2018-09-24 21:51:51.068665286 +0200
-@@ -124,6 +124,16 @@
-   ScopeLevelOrganization = 8,
-   ScopeLevelGlobal = 14
-+, ScopeLevelCount = 16
+--- w32api-5.4.1/include/iptypes.h.orig	2021-03-22 21:20:36.687967445 +0100
++++ w32api-5.4.1/include/iptypes.h	2021-03-22 21:47:48.439127490 +0100
+@@ -187,9 +187,20 @@ typedef enum
+   ScopeLevelAdmin		=	 4,
+   ScopeLevelSite		=	 5,
+   ScopeLevelOrganization	=	 8,
+-  ScopeLevelGlobal		=	14
++  ScopeLevelGlobal		=	14,
++  ScopeLevelCount		=	16
  } SCOPE_LEVEL;
+ 
 +typedef struct _SCOPE_ID {
 +  _ANONYMOUS_UNION union {
 +    _ANONYMOUS_STRUCT struct {
@@ -6553,9 +6475,107 @@
 +  ULONG Value;
 +  };
 +} SCOPE_ID, *PSCOPE_ID;
- typedef struct {
-   ULONG Index;
-   ULONG MediaType;
++
+ typedef struct
+ { ULONG 				 Index;
+   ULONG 				 MediaType;
+--- w32api-5.0.2/include/shlobj.h.orig	2017-11-09 02:35:48.000000000 +0100
++++ w32api-5.0.2/include/shlobj.h	2019-03-17 21:21:15.503665619 +0100
+@@ -1500,6 +1500,41 @@
+ void WINAPI SHGetSetSettings(LPSHELLSTATE,DWORD,BOOL);
+ #endif
+ 
++#if NTDDI_VERSION >= 0x06000000
++typedef GUID KNOWNFOLDERID;
++#ifdef __cplusplus
++#define REFKNOWNFOLDERID const KNOWNFOLDERID &
++#else
++#define REFKNOWNFOLDERID const KNOWNFOLDERID * /* __MIDL_CONST */
++#endif
++
++  typedef enum {
++    KF_FLAG_DEFAULT = 0x00000000,
++#if NTDDI_VERSION >= 0x06010000
++    KF_FLAG_NO_APPCONTAINER_REDIRECTION = 0x00010000,
++#endif
++    KF_FLAG_CREATE = 0x00008000,
++    KF_FLAG_DONT_VERIFY = 0x00004000,
++    KF_FLAG_DONT_UNEXPAND = 0x00002000,
++    KF_FLAG_NO_ALIAS = 0x00001000,
++    KF_FLAG_INIT = 0x00000800,
++    KF_FLAG_DEFAULT_PATH = 0x00000400,
++    KF_FLAG_NOT_PARENT_RELATIVE = 0x00000200,
++    KF_FLAG_SIMPLE_IDLIST = 0x00000100,
++    KF_FLAG_ALIAS_ONLY = 0x80000000
++  } KNOWN_FOLDER_FLAG;
++
++  DEFINE_ENUM_FLAG_OPERATORS (KNOWN_FOLDER_FLAG);
++
++  STDAPI SHGetKnownFolderIDList (REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, LPCITEMIDLIST *ppidl);
++  STDAPI SHSetKnownFolderPath (REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PCWSTR pszPath);
++  STDAPI SHGetKnownFolderPath (REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PWSTR *ppszPath);
++#endif
++
++#if NTDDI_VERSION >= 0x06010000
++  STDAPI SHGetKnownFolderItem (REFKNOWNFOLDERID rfid, KNOWN_FOLDER_FLAG flags, HANDLE hToken, REFIID riid, void **ppv);
++#endif
++
+ #if (_WIN32_WINNT >= 0x0500) /* W2K */
+ BOOL WINAPI ILIsEqual(LPCITEMIDLIST, LPCITEMIDLIST);
+ BOOL WINAPI ILIsParent(LPCITEMIDLIST, LPCITEMIDLIST, BOOL);
+--- w32api-5.0.2/include/winapifamily.h.orig	1970-01-01 01:00:00.000000000 +0100
++++ w32api-5.0.2/include/winapifamily.h	2020-07-28 18:04:49.272345505 +0200
+@@ -0,0 +1,24 @@
++/**
++ * This file is part of the mingw-w64 runtime package.
++ * No warranty is given; refer to the file DISCLAIMER within this package.
++ */
++
++#ifndef _INC_WINAPIFAMILY
++#define _INC_WINAPIFAMILY
++
++#define WINAPI_PARTITION_DESKTOP 0x1
++#define WINAPI_PARTITION_APP     0x2
++
++#define WINAPI_FAMILY_APP WINAPI_PARTITION_APP
++#define WINAPI_FAMILY_DESKTOP_APP (WINAPI_PARTITION_DESKTOP \
++				   | WINAPI_PARTITION_APP)
++
++/* WINAPI_FAMILY can be either desktop + App, or App.  */
++#ifndef WINAPI_FAMILY
++#define WINAPI_FAMILY WINAPI_FAMILY_DESKTOP_APP
++#endif
++
++#define WINAPI_FAMILY_PARTITION(v) ((WINAPI_FAMILY & v) == v)
++#define WINAPI_FAMILY_ONE_PARTITION(vset, v) ((WINAPI_FAMILY & vset) == v)
++
++#endif
+--- w32api-5.0.2/include/winioctl.h.orig	2017-11-09 02:35:48.000000000 +0100
++++ w32api-5.0.2/include/winioctl.h	2019-03-17 21:22:23.789962347 +0100
+@@ -96,6 +96,7 @@
+ #define FSCTL_SET_REPARSE_POINT 	CTL_CODE(FILE_DEVICE_FILE_SYSTEM,41,METHOD_BUFFERED,FILE_ANY_ACCESS)
+ #define FSCTL_DELETE_REPARSE_POINT 	CTL_CODE(FILE_DEVICE_FILE_SYSTEM,43,METHOD_BUFFERED,FILE_ANY_ACCESS)
+ #define FSCTL_SET_SPARSE		CTL_CODE(FILE_DEVICE_FILE_SYSTEM,49,METHOD_BUFFERED,FILE_SPECIAL_ACCESS)
++#define FSCTL_SET_ZERO_DATA		CTL_CODE(FILE_DEVICE_FILE_SYSTEM,50,METHOD_BUFFERED,FILE_WRITE_DATA)
+ #define FSCTL_ALLOW_EXTENDED_DASD_IO 	CTL_CODE(FILE_DEVICE_FILE_SYSTEM,32,METHOD_NEITHER,FILE_ANY_ACCESS)
+ 
+ typedef DWORD DEVICE_TYPE;
+@@ -272,6 +273,15 @@
+   LARGE_INTEGER 		MftZoneEnd;
+ } NTFS_VOLUME_DATA_BUFFER, *PNTFS_VOLUME_DATA_BUFFER;
+ 
++typedef struct _FILE_SET_SPARSE_BUFFER {
++  BOOLEAN SetSparse;
++} FILE_SET_SPARSE_BUFFER,*PFILE_SET_SPARSE_BUFFER;
++
++typedef struct _FILE_ZERO_DATA_INFORMATION {
++  LARGE_INTEGER FileOffset;
++  LARGE_INTEGER BeyondFinalZero;
++} FILE_ZERO_DATA_INFORMATION,*PFILE_ZERO_DATA_INFORMATION;
++
+ _END_C_DECLS
+ 
+ #undef __WINIOCTL_H_SOURCED__
 --- w32api-5.0.2/lib/iphlpapi.def.orig	2017-11-09 02:35:48.000000000 +0100
 +++ w32api-5.0.2/lib/iphlpapi.def	2018-09-26 15:56:52.920268737 +0200
 @@ -1,49 +1,264 @@
@@ -6824,103 +6844,6 @@
 +if_indextoname@8
 +if_nametoindex@4
 +register_icmp@0
---- w32api-5.0.2/include/shlobj.h.orig	2017-11-09 02:35:48.000000000 +0100
-+++ w32api-5.0.2/include/shlobj.h	2019-03-17 21:21:15.503665619 +0100
-@@ -1500,6 +1500,41 @@
- void WINAPI SHGetSetSettings(LPSHELLSTATE,DWORD,BOOL);
- #endif
- 
-+#if NTDDI_VERSION >= 0x06000000
-+typedef GUID KNOWNFOLDERID;
-+#ifdef __cplusplus
-+#define REFKNOWNFOLDERID const KNOWNFOLDERID &
-+#else
-+#define REFKNOWNFOLDERID const KNOWNFOLDERID * /* __MIDL_CONST */
-+#endif
-+
-+  typedef enum {
-+    KF_FLAG_DEFAULT = 0x00000000,
-+#if NTDDI_VERSION >= 0x06010000
-+    KF_FLAG_NO_APPCONTAINER_REDIRECTION = 0x00010000,
-+#endif
-+    KF_FLAG_CREATE = 0x00008000,
-+    KF_FLAG_DONT_VERIFY = 0x00004000,
-+    KF_FLAG_DONT_UNEXPAND = 0x00002000,
-+    KF_FLAG_NO_ALIAS = 0x00001000,
-+    KF_FLAG_INIT = 0x00000800,
-+    KF_FLAG_DEFAULT_PATH = 0x00000400,
-+    KF_FLAG_NOT_PARENT_RELATIVE = 0x00000200,
-+    KF_FLAG_SIMPLE_IDLIST = 0x00000100,
-+    KF_FLAG_ALIAS_ONLY = 0x80000000
-+  } KNOWN_FOLDER_FLAG;
-+
-+  DEFINE_ENUM_FLAG_OPERATORS (KNOWN_FOLDER_FLAG);
-+
-+  STDAPI SHGetKnownFolderIDList (REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, LPCITEMIDLIST *ppidl);
-+  STDAPI SHSetKnownFolderPath (REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PCWSTR pszPath);
-+  STDAPI SHGetKnownFolderPath (REFKNOWNFOLDERID rfid, DWORD dwFlags, HANDLE hToken, PWSTR *ppszPath);
-+#endif
-+
-+#if NTDDI_VERSION >= 0x06010000
-+  STDAPI SHGetKnownFolderItem (REFKNOWNFOLDERID rfid, KNOWN_FOLDER_FLAG flags, HANDLE hToken, REFIID riid, void **ppv);
-+#endif
-+
- #if (_WIN32_WINNT >= 0x0500) /* W2K */
- BOOL WINAPI ILIsEqual(LPCITEMIDLIST, LPCITEMIDLIST);
- BOOL WINAPI ILIsParent(LPCITEMIDLIST, LPCITEMIDLIST, BOOL);
---- w32api-5.0.2/include/winapifamily.h.orig	1970-01-01 01:00:00.000000000 +0100
-+++ w32api-5.0.2/include/winapifamily.h	2020-07-28 18:04:49.272345505 +0200
-@@ -0,0 +1,24 @@
-+/**
-+ * This file is part of the mingw-w64 runtime package.
-+ * No warranty is given; refer to the file DISCLAIMER within this package.
-+ */
-+
-+#ifndef _INC_WINAPIFAMILY
-+#define _INC_WINAPIFAMILY
-+
-+#define WINAPI_PARTITION_DESKTOP 0x1
-+#define WINAPI_PARTITION_APP     0x2
-+
-+#define WINAPI_FAMILY_APP WINAPI_PARTITION_APP
-+#define WINAPI_FAMILY_DESKTOP_APP (WINAPI_PARTITION_DESKTOP \
-+				   | WINAPI_PARTITION_APP)
-+
-+/* WINAPI_FAMILY can be either desktop + App, or App.  */
-+#ifndef WINAPI_FAMILY
-+#define WINAPI_FAMILY WINAPI_FAMILY_DESKTOP_APP
-+#endif
-+
-+#define WINAPI_FAMILY_PARTITION(v) ((WINAPI_FAMILY & v) == v)
-+#define WINAPI_FAMILY_ONE_PARTITION(vset, v) ((WINAPI_FAMILY & vset) == v)
-+
-+#endif
---- w32api-5.0.2/include/winioctl.h.orig	2017-11-09 02:35:48.000000000 +0100
-+++ w32api-5.0.2/include/winioctl.h	2019-03-17 21:22:23.789962347 +0100
-@@ -96,6 +96,7 @@
- #define FSCTL_SET_REPARSE_POINT 	CTL_CODE(FILE_DEVICE_FILE_SYSTEM,41,METHOD_BUFFERED,FILE_ANY_ACCESS)
- #define FSCTL_DELETE_REPARSE_POINT 	CTL_CODE(FILE_DEVICE_FILE_SYSTEM,43,METHOD_BUFFERED,FILE_ANY_ACCESS)
- #define FSCTL_SET_SPARSE		CTL_CODE(FILE_DEVICE_FILE_SYSTEM,49,METHOD_BUFFERED,FILE_SPECIAL_ACCESS)
-+#define FSCTL_SET_ZERO_DATA		CTL_CODE(FILE_DEVICE_FILE_SYSTEM,50,METHOD_BUFFERED,FILE_WRITE_DATA)
- #define FSCTL_ALLOW_EXTENDED_DASD_IO 	CTL_CODE(FILE_DEVICE_FILE_SYSTEM,32,METHOD_NEITHER,FILE_ANY_ACCESS)
- 
- typedef DWORD DEVICE_TYPE;
-@@ -272,6 +273,15 @@
-   LARGE_INTEGER 		MftZoneEnd;
- } NTFS_VOLUME_DATA_BUFFER, *PNTFS_VOLUME_DATA_BUFFER;
- 
-+typedef struct _FILE_SET_SPARSE_BUFFER {
-+  BOOLEAN SetSparse;
-+} FILE_SET_SPARSE_BUFFER,*PFILE_SET_SPARSE_BUFFER;
-+
-+typedef struct _FILE_ZERO_DATA_INFORMATION {
-+  LARGE_INTEGER FileOffset;
-+  LARGE_INTEGER BeyondFinalZero;
-+} FILE_ZERO_DATA_INFORMATION,*PFILE_ZERO_DATA_INFORMATION;
-+
- _END_C_DECLS
- 
- #undef __WINIOCTL_H_SOURCED__
 --- w32api-5.0.2/lib/shell32.def.orig	2017-11-09 02:35:48.000000000 +0100
 +++ w32api-5.0.2/lib/shell32.def	2019-03-17 21:25:25.175646363 +0100
 @@ -184,3 +184,7 @@
