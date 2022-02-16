@@ -109,12 +109,12 @@ cp /usr/share/automake/config.sub .
 	--host=%{target} \
 	--build=%{_target_platform}
 
-%{__make}
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} -C w32api install \
+%{__make} -C w32api -j1 install \
 	libdir=$RPM_BUILD_ROOT%{_libdir} \
 	includedir=$RPM_BUILD_ROOT%{_includedir}
 
