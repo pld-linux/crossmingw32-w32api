@@ -35,7 +35,7 @@ BuildRequires:	crossmingw32-gcc
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires:	crossmingw32-binutils >= 2.15.91.0.2-2
-Obsoletes:	crossmingw32-platform
+Obsoletes:	crossmingw32-platform < 1:2.3
 Conflicts:	crossmingw32-runtime < 1:4.0.3-5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
