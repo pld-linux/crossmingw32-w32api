@@ -45,7 +45,8 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_libdir		%{_prefix}/lib
 
 # strip fails on static COFF files
-%define		no_install_post_strip 1
+%define		no_install_post_strip	1
+%define		_enable_debug_packages	0
 
 %define		filterout_ld	-Wl,-z,.*
 %define		filterout_c	-gdwarf-3 -fstack-protector.*
