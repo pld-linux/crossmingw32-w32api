@@ -1,5 +1,5 @@
 --- w32api-5.4.2/include/winbase.h.orig	2021-02-09 23:05:36.000000000 +0100
-+++ w32api-5.4.2/include/winbase.h	2021-04-13 21:40:17.776045208 +0200
++++ w32api-5.4.2/include/winbase.h	2023-04-26 21:37:58.153588446 +0200
 @@ -270,6 +270,7 @@ _BEGIN_C_DECLS
  #define FILE_FLAG_DELETE_ON_CLOSE			      0x04000000
  #define FILE_FLAG_BACKUP_SEMANTICS			      0x02000000
@@ -189,7 +189,18 @@
  WINBASEAPI BOOL WINAPI IsSystemResumeAutomatic (void);
  WINBASEAPI BOOL WINAPI IsTextUnicode (PCVOID, int, LPINT);
  WINBASEAPI BOOL WINAPI IsValidAcl (PACL);
-@@ -2516,6 +2610,8 @@ WINBASEAPI DWORD WINAPI WriteTapemark (H
+@@ -2206,6 +2300,10 @@ WINBASEAPI BOOL WINAPI OpenProcessToken
+ WINBASEAPI HANDLE WINAPI OpenSemaphoreA (DWORD, BOOL, LPCSTR);
+ WINBASEAPI HANDLE WINAPI OpenSemaphoreW (DWORD, BOOL, LPCWSTR);
+ 
++BOOL WINAPI WaitOnAddress (volatile VOID *Address, PVOID CompareAddress, SIZE_T AddressSize, DWORD dwMilliseconds);
++VOID WINAPI WakeByAddressSingle (PVOID Address);
++VOID WINAPI WakeByAddressAll (PVOID Address);
++
+ WINBASEAPI BOOL WINAPI OpenThreadToken (HANDLE, DWORD, BOOL, PHANDLE);
+ 
+ /* OpenWaitableTimer: previously missing UNICODE vs. ANSI define */
+@@ -2516,6 +2614,8 @@ WINBASEAPI DWORD WINAPI WriteTapemark (H
  WINBASEAPI BOOL WINAPI ConvertFiberToThread (void);
  WINBASEAPI LPVOID WINAPI CreateFiberEx
  (SIZE_T, SIZE_T, DWORD, LPFIBER_START_ROUTINE, LPVOID);
@@ -198,7 +209,7 @@
  #endif	/* Win9x, but not WinNT until NT4 */
  
  #if _WIN32_WINDOWS >= _WIN32_WINDOWS_98 || _WIN32_WINNT >= _WIN32_WINNT_WIN2K
-@@ -2597,6 +2693,7 @@ WINBASEAPI BOOL WINAPI CreateProcessWith
+@@ -2597,6 +2697,7 @@ WINBASEAPI BOOL WINAPI CreateProcessWith
  );
  #define LOGON_WITH_PROFILE		0x00000001
  #define LOGON_NETCREDENTIALS_ONLY	0x00000002
@@ -206,7 +217,7 @@
  
  WINBASEAPI BOOL WINAPI CreateRestrictedToken
  ( HANDLE, DWORD, DWORD, PSID_AND_ATTRIBUTES, DWORD, PLUID_AND_ATTRIBUTES,
-@@ -2615,6 +2712,9 @@ WINBASEAPI BOOL WINAPI DeleteTimerQueue
+@@ -2615,6 +2716,9 @@ WINBASEAPI BOOL WINAPI DeleteTimerQueue
  WINBASEAPI BOOL WINAPI DeleteTimerQueueEx (HANDLE, HANDLE);
  WINBASEAPI BOOL WINAPI DeleteTimerQueueTimer (HANDLE, HANDLE, HANDLE);
  
@@ -216,7 +227,7 @@
  #define DeleteVolumeMountPoint __AW_SUFFIXED__(DeleteVolumeMountPoint)
  WINBASEAPI BOOL WINAPI DeleteVolumeMountPointA (LPCSTR);
  WINBASEAPI BOOL WINAPI DeleteVolumeMountPointW (LPCWSTR);
-@@ -2711,6 +2811,12 @@ WINBASEAPI BOOL WINAPI MapUserPhysicalPa
+@@ -2711,6 +2815,12 @@ WINBASEAPI BOOL WINAPI MapUserPhysicalPa
  WINBASEAPI BOOL WINAPI MapUserPhysicalPagesScatter
  (PVOID *, ULONG_PTR, PULONG_PTR);
  
@@ -229,7 +240,7 @@
  #if _WIN32_WINNT >= _WIN32_WINNT_WINXP
  /* New features, implemented for WinXP; not available in Win9x.
   */
-@@ -2845,6 +2951,29 @@ WINBASEAPI BOOL WINAPI TzSpecificLocalTi
+@@ -2845,6 +2955,29 @@ WINBASEAPI BOOL WINAPI TzSpecificLocalTi
  
  WINBASEAPI BOOL WINAPI ZombifyActCtx (HANDLE);
  
@@ -259,7 +270,7 @@
  #if _WIN32_WINNT >= _WIN32_WINNT_WS03
  /* Further added features, which became available on the WinNT platform
   * from Windows Server-2003; these were never made available in Win9x.
-@@ -2902,6 +3031,21 @@ typedef struct _FILE_NAME_INFO
+@@ -2902,6 +3035,21 @@ typedef struct _FILE_NAME_INFO
    WCHAR 			FileName[1];
  } FILE_NAME_INFO, *PFILE_NAME_INFO, *LPFILE_NAME_INFO;
  
@@ -281,7 +292,7 @@
  typedef struct _FILE_STREAM_INFO
  /* http://msdn.microsoft.com/en-us/library/aa364406%28v=VS.85%29.aspx */
  { DWORD 			NextEntryOffset;
-@@ -2927,6 +3071,10 @@ typedef struct _FILE_ATTRIBUTE_TAG_INFO
+@@ -2927,6 +3075,10 @@ typedef struct _FILE_ATTRIBUTE_TAG_INFO
    DWORD 			ReparseTag;
  } FILE_ATTRIBUTE_TAG_INFO, *PFILE_ATTRIBUTE_TAG_INFO, *LPFILE_ATTRIBUTE_TAG_INFO;
  
@@ -292,7 +303,7 @@
  typedef struct _FILE_ID_BOTH_DIR_INFO
  /* http://msdn.microsoft.com/en-us/library/aa364226%28v=VS.85%29.aspx */
  { DWORD 			NextEntryOffset;
-@@ -2946,6 +3094,32 @@ typedef struct _FILE_ID_BOTH_DIR_INFO
+@@ -2946,6 +3098,32 @@ typedef struct _FILE_ID_BOTH_DIR_INFO
    WCHAR 			FileName[1];
  } FILE_ID_BOTH_DIR_INFO, *PFILE_ID_BOTH_DIR_INFO, *LPFILE_ID_BOTH_DIR_INFO;
  
@@ -325,7 +336,7 @@
  typedef struct _FILE_REMOTE_PROTOCOL_INFO
  /* http://msdn.microsoft.com/en-us/library/dd979524%28v=VS.85%29.aspx */
  { USHORT			StructureVersion;
-@@ -2959,9 +3133,24 @@ typedef struct _FILE_REMOTE_PROTOCOL_INF
+@@ -2959,9 +3137,24 @@ typedef struct _FILE_REMOTE_PROTOCOL_INF
    struct
    { ULONG			  Reserved[8];
    }				GenericReserved;
@@ -350,7 +361,7 @@
  } FILE_REMOTE_PROTOCOL_INFO, *PFILE_REMOTE_PROTOCOL_INFO, *LPFILE_REMOTE_PROTOCOL_INFO;
  
  typedef enum _DEP_SYSTEM_POLICY_TYPE
-@@ -2994,6 +3183,10 @@ typedef enum _FILE_INFO_BY_HANDLE_CLASS
+@@ -2994,6 +3187,10 @@ typedef enum _FILE_INFO_BY_HANDLE_CLASS
  WINBASEAPI BOOL WINAPI CreateSymbolicLinkA (LPCSTR, LPCSTR, DWORD);
  WINBASEAPI BOOL WINAPI CreateSymbolicLinkW (LPCWSTR, LPCWSTR, DWORD);
  
@@ -361,7 +372,7 @@
  /* http://msdn.microsoft.com/en-us/library/aa364953%28VS.85%29.aspx */
  WINBASEAPI BOOL WINAPI GetFileInformationByHandleEx
  (HANDLE, FILE_INFO_BY_HANDLE_CLASS, LPVOID, DWORD);
-@@ -3029,6 +3222,202 @@ BOOL WINAPI SleepConditionVariableSRW (P
+@@ -3029,6 +3226,202 @@ BOOL WINAPI SleepConditionVariableSRW (P
  void WINAPI WakeAllConditionVariable (PCONDITION_VARIABLE);
  void WINAPI WakeConditionVariable (PCONDITION_VARIABLE);
  
@@ -564,7 +575,7 @@
  #if _WIN32_WINNT >= _WIN32_WINNT_WIN7
  /* Additional features, available only on the WinNT series platforms, from
   * the release of Windows-7 onwards.
-@@ -3042,6 +3431,161 @@ WINBASEAPI BOOL WINAPI SetProcessDEPPoli
+@@ -3042,6 +3435,161 @@ WINBASEAPI BOOL WINAPI SetProcessDEPPoli
  BOOLEAN WINAPI TryAcquireSRWLockExclusive (PSRWLOCK);
  BOOLEAN WINAPI TryAcquireSRWLockShared (PSRWLOCK);
  
