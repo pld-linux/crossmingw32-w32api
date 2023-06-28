@@ -1,0 +1,11 @@
+--- w32api-5.4.2/include/windef.h.orig	2020-03-11 21:42:26.000000000 +0100
++++ w32api-5.4.2/include/windef.h	2023-06-28 20:27:18.368282772 +0200
+@@ -246,7 +246,7 @@ typedef unsigned long DWORD;
+ typedef int WINBOOL,*PWINBOOL,*LPWINBOOL;
+ /* FIXME: Is there a good solution to this? */
+ #ifndef XFree86Server
+-#ifndef __OBJC__
++#if !defined(__OBJC__) && !defined(__GNU_LIBOBJC__)
+ typedef WINBOOL BOOL;
+ #else
+ #define BOOL WINBOOL

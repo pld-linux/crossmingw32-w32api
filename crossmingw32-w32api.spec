@@ -6,7 +6,7 @@ Version:	5.4.2
 %define	apisrc	w32api-%{apiver}-mingw32
 %define runver	5.4.2
 %define	runsrc	mingwrt-%{runver}-mingw32
-Release:	2
+Release:	3
 Epoch:		1
 License:	Free (Public Domain, SGI Free Software License B, BSD)
 Group:		Development/Libraries
@@ -28,6 +28,7 @@ Source5:	https://www.khronos.org/registry/EGL/api/KHR/khrplatform.h
 # Source5-md5:	d03191518ac2cfc3c10d22df034b154a
 Patch0:		%{name}-mmsystem.patch
 Patch1:		%{name}-winapi-update.patch
+Patch2:		%{name}-objc.patch
 URL:		https://osdn.net/projects/mingw/
 BuildRequires:	autoconf >= 2.64
 BuildRequires:	automake
@@ -95,6 +96,7 @@ ln -snf mingwrt-%{runver} mingwrt
 cd w32api
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 cd mingwrt
