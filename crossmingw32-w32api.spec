@@ -94,9 +94,9 @@ DirectX z API Win32 dla MinGW.
 ln -snf w32api-%{apiver} w32api
 ln -snf mingwrt-%{runver} mingwrt
 cd w32api
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
 
 %build
 cd mingwrt
